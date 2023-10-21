@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React from "react";
 import {Route, Routes} from "react-router-dom";
 import Login from "../pages/Login";
 import ProtectedRoute from "./PrivateRoutes";
@@ -8,26 +8,16 @@ import Notfound from "../pages/Notfound";
 import Demo from "../demo/Demo";
 import Forgot from "../pages/Forgot";
 import Event from "../pages/Event";
-import Payment from "../pages/Payment";
-import skillAPI from "../api/skillAPI";
 
 const Home = React.lazy(() => import("../pages/Home"));
+const SkillList = React.lazy(() => import("../pages/skill/SkillList"));
+const StartQuiz = React.lazy(() => import("../pages/skill/StartQuiz"));
 
 /**
  *
  *  All routes are declared here
  */
 const InclusifyRoutes = () => {
-
-    const fn = async ()=>{
-        await skillAPI.addSkill().then(res=>{
-            console.log(res)
-        })
-    }
-
-    useEffect(()=>{
-        fn()
-    }, [])
 
     return (
         <Routes>
@@ -47,6 +37,8 @@ const InclusifyRoutes = () => {
                 <Route path={`/defaultsettings`} element={<Settings/>}/>
                 <Route path={"/home"} element={<Home/>}/>
                 <Route path={"/event"} element={<Event/>}/>
+                <Route path={"/skills"} element={<SkillList/>}/>
+                <Route path={"/skills/startQuiz/:skillId"} element={<StartQuiz/>}/>
 
                 {/* Routes you have to be a LAWMAKER in to reach else you will be redirected to notfound */}
 
