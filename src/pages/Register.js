@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import userApi from "../api/userApi";
 import "mdi-icons/css/materialdesignicons.min.css";
+import { Navigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const Register = () => {
     event.preventDefault(); // to prevent the default form submission behavior
     event.stopPropagation();
 
-    await checkAllValidIfHandleSubmit();
+    await handleSubmit(); //checkAllValidIfHandleSubmit();
   };
 
   const handleChange = (name, value) => {
@@ -41,9 +42,9 @@ const Register = () => {
     console.log(formData);
     try {
       const user = await userApi.createUser(formData);
-      //   setTimeout(() => {
-      //     navigate("/login");
-      //   }, 6000);
+      setTimeout(() => {
+        Navigate("/login");
+      }, 6000);
     } catch (error) {
       console.log(error);
     }

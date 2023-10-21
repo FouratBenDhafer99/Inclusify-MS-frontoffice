@@ -1,9 +1,11 @@
 import axios from "axios";
 // import { OAuth2Client } from "google-auth-library";
 
-const url = "http://localhost:9999/nojejs-service";
+const url = "http://localhost:9999/nodejs-service/users/";
 const keycloakUrl =
-  "http://localhost:8181/master/inclusify-ms-realm/protocol/openid-connect/token";
+  "http://localhost:8181/realms/inclusify-ms-realm/protocol/openid-connect/token";
+const keycloakAdminUrl =
+  "http://localhost:8181/realms/master/protocol/openid-connect/token/";
 
 const keycloakUserUrl =
   "http://localhost:8181/admin/realms/inclusify-ms-realm/users";
@@ -23,19 +25,23 @@ const createUser = async (user) => {
         },
       };
 
-      const keycloakData = {
+      const data = {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
         enabled: true,
         username: user.username,
       };
-      const response2 = await axios.get(keycloakUserUrl, keycloakData, config);
+      const response2 = await axios.post(keycloakUserUrl, data, config);
       console.log(response2.data);
 
       // Creating user in our database
-      const response3 = await axios.post(url + "/register", user);
+      const response3 = await axios.post(url, user);
       console.log(response3.data);
+
+      if (response2 && response3) {
+        return response3.data;
+      }
     }
   } catch (error) {
     console.log(error);
@@ -44,15 +50,16 @@ const createUser = async (user) => {
 
 const getKeycloakToken = async () => {
   const data = new URLSearchParams();
-  data.append("username", "admin");
+  data.append("username", "youssefalmia");
   data.append("password", "admin123");
   data.append("grant_type", "password");
-  data.append("client_id", "admin-cli");
-  // data.append("client_secret", "prloMH0NZEbr8aNYR3UZBfUCrsT2T56p");
+  data.append("client_id", "ms-auth");
+  data.append("client_secret", "prloMH0NZEbr8aNYR3UZBfUCrsT2T56p");
 
   const config = {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
+      // "Access-Control-Allow-Origin": "*",
     },
   };
 
@@ -61,8 +68,19 @@ const getKeycloakToken = async () => {
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.log(error);
-    console.log(error);
+    if (error.response) {
+      // The request was made and the server responded with a status code that falls out of the range of 2xx.
+      console.log("Response Data:", error.response.data);
+      console.log("Status Code:", error.response.status);
+      console.log("Headers:", error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received (e.g., the server is down or there is no internet connection).
+      console.log("No Response Received. Request Details:", error.request);
+    } else {
+      // Something happened in setting up the request that triggered the error.
+      console.log("Request Setup Error:", error.message);
+    }
+    console.log("Error Config:", error.config);
   }
 };
 
@@ -249,6 +267,7 @@ export default {
   getById,
   forgetPassword,
   verifyResetPassword,
+  getKeycloakToken,
   // verifyGoogle,
   getByEmail,
   verifyUser,
