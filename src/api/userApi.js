@@ -1,7 +1,7 @@
 import axios from "axios";
 // import { OAuth2Client } from "google-auth-library";
 
-const url = "http://localhost:9999/nodejs-service/users/";
+const url = "http://localhost:9999/nodejs-service/users";
 const keycloakUrl =
   "http://localhost:8181/realms/inclusify-ms-realm/protocol/openid-connect/token";
 const keycloakAdminUrl =
@@ -21,6 +21,7 @@ const createUser = async (user) => {
       const config = {
         headers: {
           "Content-Type": "application/json",
+          // "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${authToken}`,
         },
       };
@@ -32,19 +33,40 @@ const createUser = async (user) => {
         enabled: true,
         username: user.username,
       };
-      const response2 = await axios.post(keycloakUserUrl, data, config);
+
+      const config2 = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      };
+
+      const response2 = await axios.post(keycloakUserUrl, data, config2);
       console.log(response2.data);
 
       // Creating user in our database
       const response3 = await axios.post(url, user);
-      console.log(response3.data);
+      console.log(response3.status);
 
-      if (response2 && response3) {
-        return response3.data;
+      if (response2.status < 250 && response3.status < 250) {
+        return "All good";
       }
     }
   } catch (error) {
-    console.log(error);
+    if (error.response) {
+      // The request was made and the server responded with a status code that falls out of the range of 2xx.
+      console.log("Response Data:", error.response.data);
+      console.log("Status Code:", error.response.status);
+      console.log("Headers:", error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received (e.g., the server is down or there is no internet connection).
+      console.log("No Response Received. Request Details:", error.request);
+    } else {
+      console.log(error);
+      // Something happened in setting up the request that triggered the error.
+      console.log("Request Setup Error:", error.message);
+    }
+    console.log("Error Config:", error.config);
   }
 };
 

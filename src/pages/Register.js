@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import userApi from "../api/userApi";
 import "mdi-icons/css/materialdesignicons.min.css";
-import { Navigate } from "react-router-dom";
+import { Navigate, redirect } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -42,9 +42,10 @@ const Register = () => {
     console.log(formData);
     try {
       const user = await userApi.createUser(formData);
+      console.log(user);
       setTimeout(() => {
-        Navigate("/login");
-      }, 6000);
+        window.location.href = "http://localhost:9999/feed-service/posts/test";
+      }, 4000);
     } catch (error) {
       console.log(error);
     }
