@@ -7,6 +7,7 @@ import Register from "../pages/Register";
 import Notfound from "../pages/Notfound";
 import Demo from "../demo/Demo";
 import Forgot from "../pages/Forgot";
+import Event from "../pages/Event";
 import Payment from "../pages/Payment";
 import skillAPI from "../api/skillAPI";
 
@@ -45,6 +46,7 @@ const InclusifyRoutes = () => {
 
                 <Route path={`/defaultsettings`} element={<Settings/>}/>
                 <Route path={"/home"} element={<Home/>}/>
+                <Route path={"/event"} element={<Event/>}/>
 
                 {/* Routes you have to be a LAWMAKER in to reach else you will be redirected to notfound */}
 
