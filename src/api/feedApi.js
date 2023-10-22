@@ -31,7 +31,7 @@ const keycloakUrl =
 const getAllPosts = async (user) => {
   console.log(user);
   try {
-    const response = await getKeycloakToken();
+    const response = await getKeycloakToken(url);
     if (response) {
       console.log(response);
       const authToken = response.access_token;
@@ -44,6 +44,9 @@ const getAllPosts = async (user) => {
       };
 
       const response3 = await axios.get(url, config);
+      console.log(response3.data);
+      // const response2 = await axios.get(url + "/test", config);
+      // console.log(response2.data);
       return response3.data;
     }
   } catch (error) {
