@@ -20,7 +20,7 @@ const createUser = async (user) => {
       const authToken = response.access_token;
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          //"Content-Type": "application/json",
           // "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${authToken}`,
         },
@@ -36,7 +36,7 @@ const createUser = async (user) => {
 
       const config2 = {
         headers: {
-          "Content-Type": "application/json",
+          //"Content-Type": "application/json",
           Authorization: `Bearer ${authToken}`,
         },
       };
@@ -154,7 +154,7 @@ const login = async (email, password) => {
       console.log(authToken);
       const config2 = {
         headers: {
-          "Content-Type": "application/json",
+          //"Content-Type": "application/json",
           Authorization: `Bearer ${authToken}`,
         },
       };
@@ -228,7 +228,7 @@ const getById = async (id) => {
     const authToken = response.access_token;
     const config2 = {
       headers: {
-        "Content-Type": "application/json",
+        //"Content-Type": "application/json",
         Authorization: `Bearer ${authToken}`,
       },
     };

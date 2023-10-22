@@ -1,20 +1,64 @@
 import axios from "axios";
+import {
+    getKeycloakToken
+} from "./auth_helper";
 
 const BASE_URL = "http://localhost:9999/marketplace-service/product";
-const COMMENT_BASE_URL = "http://localhost:8093/category";
+const CATEGORY_BASE_URL = "http://localhost:9999/marketplace-service/category";
 
 
 const MarketApi = {
     getAllProducts: async () => {
-        const response = await axios.get(`${BASE_URL}/`);
-        return response.data;
+        const response = await getKeycloakToken();
+        if (response) {
+            console.log(response);
+            const authToken = response.access_token;
+            console.log(authToken);
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            };
+            const response1 = await axios.get(`${BASE_URL}/`, config);
+            return response1.data;
+        }
+    },
+
+    getAllCategories: async () => {
+        const response = await getKeycloakToken();
+        if (response) {
+            console.log(response);
+            const authToken = response.access_token;
+            console.log(authToken);
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            };
+            const response1 = await axios.get(`${CATEGORY_BASE_URL}/`, config);
+            console.log('====================================');
+            console.log(response1.data);
+            console.log('====================================');
+            return response1.data;
+        }
     },
 
     getProductById: async (id) => {
         try {
-            const response = await axios.get(`${BASE_URL}/getById//${id}`);
-            console.log(response);
-            return response.data;
+            const response = await getKeycloakToken();
+            if (response) {
+                console.log(response);
+                const authToken = response.access_token;
+                console.log(authToken);
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${authToken}`,
+                    },
+                };
+                const response1 = await axios.get(`${BASE_URL}/getById/${id}`, config);
+                console.log(response1.data);
+                return response1.data;
+            }
         } catch (error) {
             console.log(error.response.data);
         }
@@ -25,23 +69,51 @@ const MarketApi = {
     //     return response.data;
     // },
 
-    createProduct: async (productData) => {
-        const response = await axios.post(`${BASE_URL}`, productData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
-        return response.data;
-    },
-
-    updateProductById: async (id, product) => {
+    createProduct : async (product) => {
         try {
-            const response = await axios.put(`${BASE_URL}/${id}`, product);
-            return response.data;
+            const keycloackRes = await getKeycloakToken();
+            if (keycloackRes) {
+                const authToken = keycloackRes.access_token;
+                //console.log(authToken);
+                const config = {
+                    headers: {
+                        //"Content-Type": "application/json",
+                        Authorization: `Bearer ${authToken}`,
+                    },
+                };
+                console.log('====================================');
+                console.log(product);
+                console.log('====================================');
+                const response = await axios.post(`${BASE_URL}`, product, config);
+                console.log(response);
+                return response;
+            }
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);
         }
     },
+
+ updateProductById : async (product) => {
+        try {
+            const keycloackRes = await getKeycloakToken();
+            if (keycloackRes) {
+                const authToken = keycloackRes.access_token;
+                //console.log(authToken);
+                const config = {
+                    headers: {
+                        // "Content-Type": "application/json",
+                        Authorization: `Bearer ${authToken}`,
+                    },
+                };
+                const response = await axios.put(`${BASE_URL}/` + product.id, product, config);
+                console.log(response);
+                return response.data;
+            }
+        } catch (error) {
+            console.log(error.response.data);
+        }
+    }
+
 };
 
 

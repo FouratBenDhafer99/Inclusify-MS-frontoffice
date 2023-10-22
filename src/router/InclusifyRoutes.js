@@ -1,4 +1,4 @@
-import {React, useEffect} from "react";
+import React from "react";
 import {Route, Routes} from "react-router-dom";
 import Login from "../pages/Login";
 import ProtectedRoute from "./PrivateRoutes";
@@ -11,6 +11,8 @@ import Event from "../pages/Event";
 
 const Home = React.lazy(() => import("../pages/Home"));
 const Shop = React.lazy(() => import("../pages/market/shop"));
+const Product = React.lazy(() => import("../pages/market/product"));
+const ProductAddForm = React.lazy(() => import("../pages/market/productAddForm"));
 const SkillList = React.lazy(() => import("../pages/skill/SkillList"));
 const StartQuiz = React.lazy(() => import("../pages/skill/StartQuiz"));
 
@@ -19,17 +21,6 @@ const StartQuiz = React.lazy(() => import("../pages/skill/StartQuiz"));
  *  All routes are declared here
  */
 const InclusifyRoutes = () => {
-
-    // const fn = async ()=>{
-    //     await skillAPI.addSkill().then(res=>{
-    //         console.log(res)
-    //     })
-    // }
-
-    useEffect(()=>{
-        //fn()
-    }, [])
-
     return (
         <Routes>
             <Route path={`/`} element={<Demo/>}/>
@@ -48,7 +39,10 @@ const InclusifyRoutes = () => {
                 <Route path={`/defaultsettings`} element={<Settings/>}/>
                 <Route path={"/home"} element={<Home/>}/>
                 <Route path={"/event"} element={<Event/>}/>
-                < Route path = {"/shop"} element = {< Shop/>} />
+                <Route path = {"/shop"} element = {<Shop/>} />
+                <Route path = {"/product/:productId"} element = {<Product />}/>
+                <Route path = {"/addproduct"} element = {<ProductAddForm />}/>
+                <Route path = {"/editProduct/:productId"} element = {<ProductAddForm />}/>
                 <Route path={"/skills"} element={<SkillList/>}/>
                 <Route path={"/skills/startQuiz/:skillId"} element={<StartQuiz/>}/>
 
