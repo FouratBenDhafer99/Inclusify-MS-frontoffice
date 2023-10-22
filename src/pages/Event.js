@@ -5,6 +5,9 @@ import Rightchat from '../components/Rightchat';
 import Appfooter from '../components/Appfooter';
 import Popupchat from '../components/Popupchat';
 import axios from 'axios';
+import evenementApi from "../api/evenementApi";
+
+
 
 class Event extends Component {
     constructor(props) {
@@ -34,13 +37,16 @@ class Event extends Component {
     };
 
     async componentDidMount() {
+        
         try {
-            const response = await axios.get('http://localhost:8091/event');
+            const response = await evenementApi.getAllEvents(); //await axios.get('http://localhost:8091/event');
+            console.log("aaaa"+response.data);
             this.setState({ events: response.data });
         } catch (error) {
             console.error('Error fetching events: ', error);
         }
     }
+
 
     showAutoDismissPopup = (message) => {
         this.setState({ showPopup: true, popupMessage: message });
@@ -163,7 +169,7 @@ class Event extends Component {
                                     </h2>
                                 </div>    
 
-                                {events.filter((event) => event.name.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
+                                {events?.filter((event) => event.name.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
                                     .map((value, index) => (
                                     <div key={index} className="col-lg-4 col-md-6 pe-2 ps-2">
                                         <div className="card p-3 bg-white w-100 hover-card border-0 shadow-xss rounded-xxl border-0 mb-3 overflow-hidden ">
