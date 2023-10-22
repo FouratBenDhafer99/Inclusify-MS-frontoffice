@@ -8,10 +8,9 @@ import Notfound from "../pages/Notfound";
 import Demo from "../demo/Demo";
 import Forgot from "../pages/Forgot";
 import Event from "../pages/Event";
-import Payment from "../pages/Payment";
-import skillAPI from "../api/skillAPI";
 
 const Home = React.lazy(() => import("../pages/Home"));
+const Shop = React.lazy(() => import("../pages/market/shop"));
 
 /**
  *
@@ -19,14 +18,14 @@ const Home = React.lazy(() => import("../pages/Home"));
  */
 const InclusifyRoutes = () => {
 
-    const fn = async ()=>{
-        await skillAPI.addSkill().then(res=>{
-            console.log(res)
-        })
-    }
+    // const fn = async ()=>{
+    //     await skillAPI.addSkill().then(res=>{
+    //         console.log(res)
+    //     })
+    // }
 
     useEffect(()=>{
-        fn()
+        //fn()
     }, [])
 
     return (
@@ -47,6 +46,7 @@ const InclusifyRoutes = () => {
                 <Route path={`/defaultsettings`} element={<Settings/>}/>
                 <Route path={"/home"} element={<Home/>}/>
                 <Route path={"/event"} element={<Event/>}/>
+                < Route path = {"/shop"} element = {< Shop/>} />
 
                 {/* Routes you have to be a LAWMAKER in to reach else you will be redirected to notfound */}
 

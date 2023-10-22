@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import PostApi from "../../api/PostApi";
-// import {UserContext} from "../../index";
+//import {UserContext} from "../../index";
 import { Button } from "react-bootstrap";
 import email from "../../pages/Email";
 import Load from "../Load";
@@ -13,7 +13,7 @@ const WriteComment = ({ user, postId, socket }) => {
     setCommentContent(comment);
   };
   const handleOnSubmit = async (event) => {
-    console.log(currentUser);
+    //console.log(currentUser);
     console.log(postId);
     console.log(commentContent);
     setCommentContent("");
@@ -21,7 +21,7 @@ const WriteComment = ({ user, postId, socket }) => {
     let comment = {
       postId: postId,
       comment: commentContent,
-      userId: currentUser._id,
+      //userId: currentUser._id,
     };
   };
 
