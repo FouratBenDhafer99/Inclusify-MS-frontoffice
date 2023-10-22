@@ -8,10 +8,17 @@ import Notfound from "../pages/Notfound";
 import Demo from "../demo/Demo";
 import Forgot from "../pages/Forgot";
 import Event from "../pages/Event";
+import Auth from "./Auth";
 
 const Home = React.lazy(() => import("../pages/Home"));
 const SkillList = React.lazy(() => import("../pages/skill/SkillList"));
 const StartQuiz = React.lazy(() => import("../pages/skill/StartQuiz"));
+const PlayQuiz = React.lazy(() => import("../pages/skill/PlayQuiz"));
+const ResultQuiz = React.lazy(() => import("../pages/skill/ResultQuiz"));
+const AdminSkillList = React.lazy(() => import("../pages/adminSkill/AdminSkillList"));
+const AdminSkillAdd = React.lazy(() => import("../pages/adminSkill/AdminSkillAdd"));
+const AdminQuestionList = React.lazy(() => import("../pages/adminSkill/AdminQuestionList"));
+const AdminQuestionAdd = React.lazy(() => import("../pages/adminSkill/AdminQuestionAdd"));
 
 /**
  *
@@ -29,7 +36,7 @@ const InclusifyRoutes = () => {
             {/* Routes you have to be logged in to reach else you will be redirected to Login */}
             <Route
                 element={
-                    <ProtectedRoute isAuth={true} redirectPath={"/login"}/>
+                    <ProtectedRoute isAuth={Auth.getToken()} redirectPath={"/login"}/>
                 }
             >
                 {/* Add your private routes here */}
@@ -37,10 +44,21 @@ const InclusifyRoutes = () => {
                 <Route path={`/defaultsettings`} element={<Settings/>}/>
                 <Route path={"/home"} element={<Home/>}/>
                 <Route path={"/event"} element={<Event/>}/>
-                <Route path={"/skills"} element={<SkillList/>}/>
-                <Route path={"/skills/startQuiz/:skillId"} element={<StartQuiz/>}/>
+                <Route path={`/skills`}>
+                    <Route index exact element={<SkillList/>}/>
+                    <Route exact path={"/skills/startQuiz/:skillId"} element={<StartQuiz/>}/>
+                    <Route exact path={"/skills/playQuiz/:skillId"} element={<PlayQuiz/>}/>
+                    <Route exact path={"/skills/resultQuiz/:quizId"} element={<ResultQuiz/>}/>
+                </Route>
 
-                {/* Routes you have to be a LAWMAKER in to reach else you will be redirected to notfound */}
+                <Route path={`/admin/skills`}>
+                    <Route index exact element={<AdminSkillList/>}/>
+                    <Route exact path={`/admin/skills/add`} element={<AdminSkillAdd/>}/>
+                    <Route exact path={`/admin/skills/edit/:skillId`} element={<AdminSkillAdd/>}/>
+                    <Route exact path={`/admin/skills/questions/`} element={<AdminQuestionList/>}/>
+                    <Route exact path={`/admin/skills/questions/add`} element={<AdminQuestionAdd/>}/>
+                </Route>
+
 
             </Route>
             <Route path={`*`} element={<Notfound/>}/>
