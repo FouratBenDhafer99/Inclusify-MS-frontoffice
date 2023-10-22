@@ -1,4 +1,5 @@
 import axios from "axios";
+import  {getKeycloakToken} from "./auth_helper";
 // import { OAuth2Client } from "google-auth-library";
 
 const url = "http://localhost:9999/nodejs-service/users";
@@ -30,6 +31,8 @@ const createUser = async (user) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+        //credentials:[{type:"password",value:user.password,temporary:false}],
+        credentials: [{ type: "password", value: "test123", temporary: false }],
         enabled: true,
         username: user.username,
       };
@@ -69,7 +72,7 @@ const createUser = async (user) => {
     console.log("Error Config:", error.config);
   }
 };
-
+/*
 const getKeycloakToken = async () => {
   const data = new URLSearchParams();
   data.append("username", "youssefalmia");
@@ -106,6 +109,7 @@ const getKeycloakToken = async () => {
     console.log("Error Config:", error.config);
   }
 };
+*/
 
 const verifyUser = async (token) => {
   try {
@@ -297,7 +301,6 @@ export default {
   getById,
   forgetPassword,
   verifyResetPassword,
-  getKeycloakToken,
   // verifyGoogle,
   getByEmail,
   verifyUser,
