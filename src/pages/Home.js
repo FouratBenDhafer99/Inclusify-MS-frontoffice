@@ -1,17 +1,17 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import Appfooter from "../components/Appfooter";
 import Popupchat from "../components/Popupchat";
 
 import Createpost from "../components/PostComponents/Createpost";
 import Load from "../components/Load";
 import Layout from "../components/Layout";
-// import { UserContext } from "../index";
+import { UserContext } from "../index";
 import Postview from "../components/PostComponents/Postview";
 import PostApi from "../api/PostApi";
 import feedApi from "../api/feedApi";
 
 const Home = () => {
-  // const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   const [posts, setPosts] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,6 +26,7 @@ const Home = () => {
 
     fetchPosts().then(() => {
       console.log("all posts fetched");
+      console.log(currentUser);
     });
   }, []);
 
@@ -39,7 +40,7 @@ const Home = () => {
           <div className="middle-sidebar-left">
             <div className="row feed-body">
               <div className="col-xl-8 col-xxl-9 col-lg-8">
-                {/* <Createpost user={currentUser}/> */}
+                <Createpost user={currentUser} />
                 {posts.map((post) => (
                   <div key={post.id} className="post-view" data-id={post.id}>
                     <Postview user={post.user} post={post} />

@@ -30,6 +30,7 @@ const createUser = async (user) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+        credentials: [{ type: "password", value: "test123", temporary: false }],
         enabled: true,
         username: user.username,
       };
