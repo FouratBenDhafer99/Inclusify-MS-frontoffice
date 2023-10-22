@@ -76,7 +76,8 @@ const getKeycloakToken = async () => {
   data.append("password", "admin123");
   data.append("grant_type", "password");
   data.append("client_id", "ms-auth");
-  data.append("client_secret", "prloMH0NZEbr8aNYR3UZBfUCrsT2T56p");
+  data.append("client_secret", "Pcw1mk7ICYFcV1gr2zz7UQrDbRYbBEY0");
+  data.append("scope", "openid");
 
   const config = {
     headers: {
@@ -147,10 +148,26 @@ const verifyResetPassword = async (token, password) => {
 
 const login = async (email, password) => {
   try {
-    const response = await axios.post(url + "/login", { email, password });
-    return response.data;
+    const response = await getKeycloakToken();
+    if (response) {
+      const authToken = response.access_token;
+      console.log(authToken);
+      const config2 = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      };
+
+      const response1 = await axios.post(
+        url + "/login",
+        { email, password },
+        config2
+      );
+      return response1.data;
+    }
   } catch (error) {
-    console.log(error.response.data.message);
+    console.log(error);
   }
 };
 
@@ -206,11 +223,21 @@ export const updateUserById = async (id, user) => {
 };
 
 const getById = async (id) => {
-  try {
-    const response = await axios.get(url + `/byId/${id}`);
-    return response.data;
-  } catch (error) {
-    console.log(error.response.data.message);
+  const response = await getKeycloakToken();
+  if (response) {
+    const authToken = response.access_token;
+    const config2 = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    };
+    try {
+      const response = await axios.get(url + `/byId/${id}`, config2);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 
@@ -222,25 +249,6 @@ const getByEmail = async (email) => {
     console.log(error.response.data.error);
   }
 };
-
-// const verifyGoogle = async (client_id, jwtToken) => {
-//   try {
-//     const client = new OAuth2Client(client_id);
-//     // Call the verifyIdToken to
-//     // varify and decode it
-//     const ticket = await client.verifyIdToken({
-//       idToken: jwtToken,
-//       audience: client_id,
-//     });
-//     // Get the JSON with all the user info
-//     const payload = ticket.getPayload();
-//     // This is a JSON object that contains
-//     // all the user info
-//     return payload;
-//   } catch (error) {
-//     console.log(error.response.data.message);
-//   }
-// };
 
 const generateStreamKey = async (id) => {
   try {
