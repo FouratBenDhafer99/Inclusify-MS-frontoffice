@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import {React, useEffect} from "react";
 import {Route, Routes} from "react-router-dom";
 import Login from "../pages/Login";
 import ProtectedRoute from "./PrivateRoutes";
@@ -11,6 +11,8 @@ import Event from "../pages/Event";
 
 const Home = React.lazy(() => import("../pages/Home"));
 const Shop = React.lazy(() => import("../pages/market/shop"));
+const SkillList = React.lazy(() => import("../pages/skill/SkillList"));
+const StartQuiz = React.lazy(() => import("../pages/skill/StartQuiz"));
 
 /**
  *
@@ -47,6 +49,8 @@ const InclusifyRoutes = () => {
                 <Route path={"/home"} element={<Home/>}/>
                 <Route path={"/event"} element={<Event/>}/>
                 < Route path = {"/shop"} element = {< Shop/>} />
+                <Route path={"/skills"} element={<SkillList/>}/>
+                <Route path={"/skills/startQuiz/:skillId"} element={<StartQuiz/>}/>
 
                 {/* Routes you have to be a LAWMAKER in to reach else you will be redirected to notfound */}
 
