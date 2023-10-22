@@ -18,6 +18,7 @@ const ResultQuiz = React.lazy(() => import("../pages/skill/ResultQuiz"));
 const AdminSkillList = React.lazy(() => import("../pages/adminSkill/AdminSkillList"));
 const AdminSkillAdd = React.lazy(() => import("../pages/adminSkill/AdminSkillAdd"));
 const AdminQuestionList = React.lazy(() => import("../pages/adminSkill/AdminQuestionList"));
+const AdminQuestionAdd = React.lazy(() => import("../pages/adminSkill/AdminQuestionAdd"));
 
 /**
  *
@@ -55,6 +56,7 @@ const InclusifyRoutes = () => {
                     <Route exact path={`/admin/skills/add`} element={<AdminSkillAdd/>}/>
                     <Route exact path={`/admin/skills/edit/:skillId`} element={<AdminSkillAdd/>}/>
                     <Route exact path={`/admin/skills/questions/`} element={<AdminQuestionList/>}/>
+                    <Route exact path={`/admin/skills/questions/add`} element={<AdminQuestionAdd/>}/>
                 </Route>
 
 

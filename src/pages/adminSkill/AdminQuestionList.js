@@ -19,6 +19,17 @@ const AdminQuestionList=()=>{
         fn()
     }, [])
 
+    const handleDeleteQuestion =async (questionId)=>{
+        await questionsAPI.deleteQuestion(questionId).then(res=>{
+                setQuestions((prevState=>{
+                    const prevData= prevState
+                    const updatedSkills = prevData.filter(q => q.id !== questionId);
+                    return updatedSkills
+                }))
+            }
+        )
+    }
+
     return(
         <Fragment>
             <Header/><Leftnav/>
@@ -26,8 +37,8 @@ const AdminQuestionList=()=>{
                 <div className="middle-sidebar-bottom">
                     <div className="middle-sidebar-left pe-0">
                         <div className="row">
-                            <Pagetitle title="Skills"/>
-                            <div className="text-right"><a href="/admin/skills/add" className="btn btn-success text-white">Add skill</a></div>
+                            <Pagetitle title="Questions"/>
+                            <div className="text-right"><a href="/admin/skills/questions/add" className="btn btn-success text-white">Add question</a></div>
                             <div className="table-content table-responsive">
                                 <table className="table table-hover text-center">
                                     <thead className="bg-greyblue rounded-3">
@@ -43,7 +54,7 @@ const AdminQuestionList=()=>{
                                             <td className="product-headline  wide-column text-grey-900 fw-600 font-xsss">{question.description}</td>
                                             <td className="product-headline  wide-column text-grey-900 fw-600 font-xsss">{question.skill.name}</td>
                                             <td className="product-remove">
-                                                <button className="btn "><i className="ti-trash font-xs text-danger"></i></button>
+                                                <button className="btn " onClick={()=>handleDeleteQuestion(question.id)}><i className="ti-trash font-xs text-danger"></i></button>
                                             </td>
                                         </tr>
                                     ))}
