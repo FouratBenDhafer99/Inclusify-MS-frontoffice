@@ -13,7 +13,7 @@ const WriteComment = ({ user, postId, socket }) => {
     setCommentContent(comment);
   };
   const handleOnSubmit = async (event) => {
-    console.log(currentUser);
+    //console.log(currentUser);
     console.log(postId);
     console.log(commentContent);
     setCommentContent("");
@@ -21,7 +21,7 @@ const WriteComment = ({ user, postId, socket }) => {
     let comment = {
       postId: postId,
       comment: commentContent,
-      userId: currentUser._id,
+      //userId: currentUser._id,
     };
   };
 

@@ -12,6 +12,8 @@ import Event from "../pages/Event";
 const Home = React.lazy(() => import("../pages/Home"));
 const SkillList = React.lazy(() => import("../pages/skill/SkillList"));
 const StartQuiz = React.lazy(() => import("../pages/skill/StartQuiz"));
+const PlayQuiz = React.lazy(() => import("../pages/skill/PlayQuiz"));
+const ResultQuiz = React.lazy(() => import("../pages/skill/ResultQuiz"));
 
 /**
  *
@@ -37,10 +39,13 @@ const InclusifyRoutes = () => {
                 <Route path={`/defaultsettings`} element={<Settings/>}/>
                 <Route path={"/home"} element={<Home/>}/>
                 <Route path={"/event"} element={<Event/>}/>
-                <Route path={"/skills"} element={<SkillList/>}/>
-                <Route path={"/skills/startQuiz/:skillId"} element={<StartQuiz/>}/>
+                <Route path={`/skills`}>
+                    <Route index exact element={<SkillList/>}/>
+                    <Route exact path={"/skills/startQuiz/:skillId"} element={<StartQuiz/>}/>
+                    <Route exact path={"/skills/playQuiz/:skillId"} element={<PlayQuiz/>}/>
+                    <Route exact path={"/skills/resultQuiz/:quizId"} element={<ResultQuiz/>}/>
+                </Route>
 
-                {/* Routes you have to be a LAWMAKER in to reach else you will be redirected to notfound */}
 
             </Route>
             <Route path={`*`} element={<Notfound/>}/>

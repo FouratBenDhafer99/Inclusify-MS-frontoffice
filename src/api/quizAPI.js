@@ -1,11 +1,8 @@
-import axios from "axios";
 import auth_helper from "./auth_helper";
+import axios from "axios";
 
-const url = "http://localhost:9999/skill-service/skill/";
-//const url = "http://localhost:8093/skill/";
-
-
-const getSkills = async (userId) => {
+const url = "http://localhost:9999/skill-service/quiz/";
+const generateQuizFromSkill = async (skillId) => {
     try {
         const keycloackRes = await auth_helper.getKeycloakToken();
         if (keycloackRes) {
@@ -17,7 +14,7 @@ const getSkills = async (userId) => {
                     Authorization: `Bearer ${authToken}`,
                 },
             };
-            const response = await axios.get(url+"list/"+userId, config);
+            const response = await axios.post(url+"generateQuizBySkill/"+skillId, null,config);
             console.log(response);
             return response.data;
         }
@@ -25,7 +22,8 @@ const getSkills = async (userId) => {
         console.log(error.response.data);
     }
 }
-const getSkillById = async (id) => {
+
+const getQuizById = async (quizId) => {
     try {
         const keycloackRes = await auth_helper.getKeycloakToken();
         if (keycloackRes) {
@@ -37,7 +35,7 @@ const getSkillById = async (id) => {
                     Authorization: `Bearer ${authToken}`,
                 },
             };
-            const response = await axios.get(url+"byId/"+id, config);
+            const response = await axios.get(url+"byId/"+quizId,config);
             console.log(response);
             return response.data;
         }
@@ -46,14 +44,25 @@ const getSkillById = async (id) => {
     }
 }
 
-const addSkill = async () => {
+const submitQuiz =async (quizId, quizAnswers)=>{
     try {
-        const response = await axios.post(url, {name: "Java"});
-        console.log(response);
-        return response.data;
+        const keycloackRes = await auth_helper.getKeycloakToken();
+        if (keycloackRes) {
+            const authToken = keycloackRes.access_token;
+            //console.log(authToken);
+            const config = {
+                headers: {
+                    // "Content-Type": "application/json",
+                    Authorization: `Bearer ${authToken}`,
+                },
+            };
+            const response = await axios.post(url+"submitQuiz/"+quizId, {data:quizAnswers},config);
+            console.log(response);
+            return response.data;
+        }
     } catch (error) {
         console.log(error.response.data);
     }
 }
 
-export default {getSkills, getSkillById, addSkill}
+export default {generateQuizFromSkill, submitQuiz, getQuizById}
