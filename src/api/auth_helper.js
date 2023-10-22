@@ -59,5 +59,3 @@ export const login = () => {
 export const logout = () => {
   return userManager.signoutRedirect();
 };
-
-// default export { getKeycloakToken, getUser, login, logout };

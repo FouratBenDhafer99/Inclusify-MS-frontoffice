@@ -28,18 +28,13 @@ const Login = () => {
       const res = await userApi.login(email, password);
       console.log(res);
       localStorage.setItem("token", res.token);
-      if (res.role === "ADMIN" || res.role === "MODERATOR") {
-        window.location.replace(
-          "http://localhost:4000/loginFromFront/" + res._id
-        );
-      } else {
-        //Update UserContext
-        Auth.toUpdateCurrentUser().then((u) => {
-          u.password = password;
-          setCurrentUser(u);
-          navigate("/home");
-        });
-      }
+
+      //Update UserContext
+      Auth.toUpdateCurrentUser().then((u) => {
+        u.password = password;
+        setCurrentUser(u);
+        navigate("/home");
+      });
     } catch (err) {
       console.error(err);
       setErrorMessage(err);

@@ -1,8 +1,24 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import Header from "../../components/Header";
 import Leftnav from "../../components/Leftnav";
+import skillAPI from "../../api/skillAPI";
+import {useParams} from "react-router-dom";
 
 const StartQuiz = () => {
+
+    const [skill, setSkill]= useState({})
+
+    const params = useParams()
+    const fn = async ()=>{
+        await skillAPI.getSkillById(params.skillId).then(res=>{
+            console.log(res)
+            setSkill(res)
+        })
+    }
+
+    useEffect(()=>{
+        fn()
+    }, [])
 
     return (
         <Fragment>
@@ -21,12 +37,12 @@ const StartQuiz = () => {
                                                  className="w-100"/>
                                         </div>
                                         <div className="col-lg-6 ps-lg-5">
-                                            <h2 className="display1-size d-block mb-2 text-grey-900 fw-700">$skill->name</h2>
+                                            <h2 className="display1-size d-block mb-2 text-grey-900 fw-700">{skill.name}</h2>
                                             <p className="font-xssss fw-500 text-grey-500 lh-26">
-                                                You are about to start a quiz for <b>$skill</b>. <br/>
+                                                You are about to start a quiz for <b>{skill.name}</b>. <br/>
                                                 <i>Good luck!</i>
                                             </p>
-                                            <a href="route('skill.play_quiz', $skill->id)"
+                                            <a href={'/skills/playQuiz/'+skill.id}
                                                className="btn w200 border-0 bg-primary-gradiant p-3 text-white fw-600 rounded-3 d-inline-block font-xssss">
                                                 Start the quiz
                                             </a>
