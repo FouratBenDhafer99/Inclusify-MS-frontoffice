@@ -1,12 +1,4 @@
-import React, {
-  Fragment,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Appfooter from "../components/Appfooter";
 import Popupchat from "../components/Popupchat";
 
