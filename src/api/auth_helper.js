@@ -1,5 +1,5 @@
-import { UserManager } from "oidc-client";
 import axios from "axios";
+import { UserManager } from "oidc-client";
 
 const settings = {
   authority: "http://localhost:9999/login/oauth2/code/keycloak",
@@ -11,19 +11,10 @@ const settings = {
 
 const userManager = new UserManager(settings);
 
-export const getUser = () => {
-  return userManager.getUser();
-};
-export const login = () => {
-  return userManager.signinRedirect();
-};
-export const logout = () => {
-  return userManager.signoutRedirect();
-};
-
-const keycloakUrl =
+export const getKeycloakToken = async () => {
+  const keycloakUrl =
     "http://localhost:8181/realms/inclusify-ms-realm/protocol/openid-connect/token";
-const getKeycloakToken = async () => {
+
   const data = new URLSearchParams();
   data.append("username", "youssefalmia");
   data.append("password", "admin123");
@@ -59,4 +50,12 @@ const getKeycloakToken = async () => {
   }
 };
 
-export default {getKeycloakToken}
+export const getUser = () => {
+  return userManager.getUser();
+};
+export const login = () => {
+  return userManager.signinRedirect();
+};
+export const logout = () => {
+  return userManager.signoutRedirect();
+};

@@ -19,6 +19,7 @@ const StartQuiz = () => {
     useEffect(()=>{
         fn()
     }, [])
+
     return (
         <Fragment>
             <Header/>

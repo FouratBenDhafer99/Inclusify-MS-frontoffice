@@ -3,7 +3,7 @@ import PostInteractions from "./PostInteractions";
 import CreatePostModal from "./CreatePostModal";
 
 import ReactOnPost from "./ReactOnPost";
-// import {UserContext} from '../../index';
+import { UserContext } from "../../index";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 import PostApi from "../../api/PostApi";
@@ -26,7 +26,7 @@ const Postview = ({
   user = post?.user || user;
   time = post?.createdAt;
   postimage = post?.images[0] || postimage;
-  // const {currentUser, setCurrentUser} = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const [commentsNumber, setCommentsNumber] = useState(0);
   const [likesNumber, setLikesNumber] = useState(0);

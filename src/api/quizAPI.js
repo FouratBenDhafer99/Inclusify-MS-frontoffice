@@ -1,10 +1,10 @@
-import auth_helper from "./auth_helper";
+import  {getKeycloakToken} from "./auth_helper";
 import axios from "axios";
 
 const url = "http://localhost:9999/skill-service/quiz/";
-const generateQuizFromSkill = async (skillId) => {
+const generateQuizFromSkill = async (skillId, userID) => {
     try {
-        const keycloackRes = await auth_helper.getKeycloakToken();
+        const keycloackRes = await getKeycloakToken();
         if (keycloackRes) {
             const authToken = keycloackRes.access_token;
             //console.log(authToken);
@@ -14,7 +14,7 @@ const generateQuizFromSkill = async (skillId) => {
                     Authorization: `Bearer ${authToken}`,
                 },
             };
-            const response = await axios.post(url+"generateQuizBySkill/"+skillId, null,config);
+            const response = await axios.post(url+"generateQuizBySkill/"+skillId+"/"+userID, null,config);
             console.log(response);
             return response.data;
         }
@@ -25,7 +25,7 @@ const generateQuizFromSkill = async (skillId) => {
 
 const getQuizById = async (quizId) => {
     try {
-        const keycloackRes = await auth_helper.getKeycloakToken();
+        const keycloackRes = await getKeycloakToken();
         if (keycloackRes) {
             const authToken = keycloackRes.access_token;
             //console.log(authToken);
@@ -46,7 +46,7 @@ const getQuizById = async (quizId) => {
 
 const submitQuiz =async (quizId, quizAnswers)=>{
     try {
-        const keycloackRes = await auth_helper.getKeycloakToken();
+        const keycloackRes = await getKeycloakToken();
         if (keycloackRes) {
             const authToken = keycloackRes.access_token;
             //console.log(authToken);

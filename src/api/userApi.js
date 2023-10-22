@@ -1,5 +1,5 @@
 import axios from "axios";
-import auth_helper from "./auth_helper";
+import  {getKeycloakToken} from "./auth_helper";
 // import { OAuth2Client } from "google-auth-library";
 
 const url = "http://localhost:9999/nodejs-service/users";
@@ -14,7 +14,7 @@ const keycloakUserUrl =
 const createUser = async (user) => {
   console.log(user);
   try {
-    const response = await auth_helper.getKeycloakToken();
+    const response = await getKeycloakToken();
     if (response) {
       // Creating user in keycloak
       console.log(response);
@@ -31,7 +31,8 @@ const createUser = async (user) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        credentials:[{type:"password",value:user.password,temporary:false}],
+        //credentials:[{type:"password",value:user.password,temporary:false}],
+        credentials: [{ type: "password", value: "test123", temporary: false }],
         enabled: true,
         username: user.username,
       };
@@ -71,7 +72,44 @@ const createUser = async (user) => {
     console.log("Error Config:", error.config);
   }
 };
+/*
+const getKeycloakToken = async () => {
+  const data = new URLSearchParams();
+  data.append("username", "youssefalmia");
+  data.append("password", "admin123");
+  data.append("grant_type", "password");
+  data.append("client_id", "ms-auth");
+  data.append("client_secret", "Pcw1mk7ICYFcV1gr2zz7UQrDbRYbBEY0");
+  data.append("scope", "openid");
 
+  const config = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      // "Access-Control-Allow-Origin": "*",
+    },
+  };
+
+  try {
+    const response = await axios.post(keycloakUrl, data, config);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code that falls out of the range of 2xx.
+      console.log("Response Data:", error.response.data);
+      console.log("Status Code:", error.response.status);
+      console.log("Headers:", error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received (e.g., the server is down or there is no internet connection).
+      console.log("No Response Received. Request Details:", error.request);
+    } else {
+      // Something happened in setting up the request that triggered the error.
+      console.log("Request Setup Error:", error.message);
+    }
+    console.log("Error Config:", error.config);
+  }
+};
+*/
 
 const verifyUser = async (token) => {
   try {
@@ -114,10 +152,26 @@ const verifyResetPassword = async (token, password) => {
 
 const login = async (email, password) => {
   try {
-    const response = await axios.post(url + "/login", { email, password });
-    return response.data;
+    const response = await getKeycloakToken();
+    if (response) {
+      const authToken = response.access_token;
+      console.log(authToken);
+      const config2 = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+      };
+
+      const response1 = await axios.post(
+        url + "/login",
+        { email, password },
+        config2
+      );
+      return response1.data;
+    }
   } catch (error) {
-    console.log(error.response.data.message);
+    console.log(error);
   }
 };
 
@@ -173,11 +227,21 @@ export const updateUserById = async (id, user) => {
 };
 
 const getById = async (id) => {
-  try {
-    const response = await axios.get(url + `/byId/${id}`);
-    return response.data;
-  } catch (error) {
-    console.log(error.response.data.message);
+  const response = await getKeycloakToken();
+  if (response) {
+    const authToken = response.access_token;
+    const config2 = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    };
+    try {
+      const response = await axios.get(url + `/byId/${id}`, config2);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 
@@ -189,25 +253,6 @@ const getByEmail = async (email) => {
     console.log(error.response.data.error);
   }
 };
-
-// const verifyGoogle = async (client_id, jwtToken) => {
-//   try {
-//     const client = new OAuth2Client(client_id);
-//     // Call the verifyIdToken to
-//     // varify and decode it
-//     const ticket = await client.verifyIdToken({
-//       idToken: jwtToken,
-//       audience: client_id,
-//     });
-//     // Get the JSON with all the user info
-//     const payload = ticket.getPayload();
-//     // This is a JSON object that contains
-//     // all the user info
-//     return payload;
-//   } catch (error) {
-//     console.log(error.response.data.message);
-//   }
-// };
 
 const generateStreamKey = async (id) => {
   try {

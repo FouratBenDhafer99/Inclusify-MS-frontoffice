@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {Fragment, useContext, useEffect, useState} from "react";
 import Header from '../../components/Header';
 import Leftnav from '../../components/Leftnav';
 import Rightchat from '../../components/Rightchat';
@@ -6,14 +6,16 @@ import Pagetitle from '../../components/Pagetitle';
 import Appfooter from '../../components/Appfooter';
 import Popupchat from '../../components/Popupchat';
 import skillAPI from "../../api/skillAPI";
-import {Link} from "react-router-dom";
+import {UserContext} from "../../index";
 
 const SkillList = () => {
 
     const [skills, setSkills]= useState([])
 
+    const { currentUser } = useContext(UserContext);
     const fn = async ()=>{
-        await skillAPI.getSkills("userId").then(res=>{
+        console.log(currentUser)
+        await skillAPI.getSkills(currentUser?._id).then(res=>{
             console.log(res)
             setSkills(res)
         })
@@ -21,7 +23,7 @@ const SkillList = () => {
 
     useEffect(()=>{
         fn()
-    }, [])
+    }, [currentUser])
 
     return (
         <Fragment>
@@ -38,7 +40,7 @@ const SkillList = () => {
                                 <Pagetitle title="Skills"/>
 
                                 <div className="row ps-2 pe-1">
-                                    {skills.map((value, index) => (
+                                    {skills?.map((value, index) => (
 
                                         <div key={index} className="col-md-4 col-sm-6 pe-2 ps-2">
                                             <div

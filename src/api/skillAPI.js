@@ -1,13 +1,12 @@
 import axios from "axios";
-import auth_helper from "./auth_helper";
+import {getKeycloakToken} from "./auth_helper";
 
 const url = "http://localhost:9999/skill-service/skill/";
 //const url = "http://localhost:8093/skill/";
 
-
 const getSkills = async (userId) => {
     try {
-        const keycloackRes = await auth_helper.getKeycloakToken();
+        const keycloackRes = await getKeycloakToken();
         if (keycloackRes) {
             const authToken = keycloackRes.access_token;
             //console.log(authToken);
@@ -27,7 +26,7 @@ const getSkills = async (userId) => {
 }
 const getSkillById = async (id) => {
     try {
-        const keycloackRes = await auth_helper.getKeycloakToken();
+        const keycloackRes = await getKeycloakToken();
         if (keycloackRes) {
             const authToken = keycloackRes.access_token;
             //console.log(authToken);
