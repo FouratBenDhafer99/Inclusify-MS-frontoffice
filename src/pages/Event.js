@@ -37,15 +37,13 @@ class Event extends Component {
     };
 
     async componentDidMount() {
-        
         try {
-            const response = await evenementApi.getAllEvents(); //await axios.get('http://localhost:8091/event');
-            console.log("aaaa"+response.data);
-            this.setState({ events: response.data });
+          const events = await evenementApi.getAllEvents();
+          this.setState({ events });
         } catch (error) {
-            console.error('Error fetching events: ', error);
+          console.error('Error fetching events: ', error);
         }
-    }
+      }
 
 
     showAutoDismissPopup = (message) => {
@@ -64,26 +62,26 @@ class Event extends Component {
     
     handleJoinClick = async (eventId, event) => {
         if (event.attendeeEmails && event.attendeeEmails.includes(this.state.userEmail)) {
-            alert("You have already attended this event.");
-            return;
+          alert("You have already attended this event.");
+          return;
         }
-    
+      
         const joinedEvents = new Set(this.state.joinedEvents);
         joinedEvents.add(eventId);
-    
+      
         this.setState({ joinedEvents });
-    
+        console.log("event Id" + eventId);
+
         try {
-            const response = await axios.post(`http://localhost:8091/event/${eventId}/join?userEmail=${this.state.userEmail}`);
-            console.log("Joined event successfully" + response);
-            // Show the popup after joining with a success message
+            const response = await evenementApi.join(); 
+            console.log("Joined event successfully", response );
             this.togglePopup("You have successfully joined the event.");
         } catch (error) {
-            console.error('Error joining event: ', error);
-            // Show the popup with an error message
-            this.togglePopup("An error occurred while joining the event.");
+          console.error('Error joining event: ', error);
+          this.togglePopup("An error occurred while joining the event.");
         }
-    }
+      };
+      
     
     handleCategoryChange = (categoryId) => {
         const updatedCategories = this.state.categories.map((category) => {
@@ -169,7 +167,7 @@ class Event extends Component {
                                     </h2>
                                 </div>    
 
-                                {events?.filter((event) => event.name.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
+                                {this.state.events?.filter((event) => event.name.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
                                     .map((value, index) => (
                                     <div key={index} className="col-lg-4 col-md-6 pe-2 ps-2">
                                         <div className="card p-3 bg-white w-100 hover-card border-0 shadow-xss rounded-xxl border-0 mb-3 overflow-hidden ">
