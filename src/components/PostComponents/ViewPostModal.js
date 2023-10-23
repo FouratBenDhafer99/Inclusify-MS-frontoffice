@@ -39,20 +39,20 @@ function PostViewModal({ visible, onClose, user, post }) {
   const menuClass = `${isOpen ? " show" : ""}`;
   const emojiClass = `${isActive ? " active" : ""}`;
 
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(post?.comments);
 
   const toggleActive = () => setActive(!isActive);
   const toggleOpen = () => setOpen(!isOpen);
 
-  const loadComments = async () => {
-    await PostApi.getPostComments(post.id).then((res) => {
-      // console.log(res)
-      setComments(res);
-    });
-  };
+  // const loadComments = async () => {
+  //   await PostApi.getPostComments(post.id).then((res) => {
+  //     // console.log(res)
+  //     setComments(res);
+  //   });
+  // };
 
   useEffect(() => {
-    loadComments();
+    console.log(comments);
   }, [post]);
 
   const navigate = useNavigate();
@@ -244,16 +244,16 @@ function PostViewModal({ visible, onClose, user, post }) {
                 <PostInteractions />
               </div>
             </div>
-            {/* 
+
             {comments.map((comment) => (
               <div
-                key={comment._id}
+                key={comment.id}
                 className="card w-100 border-0 shadow-none right-scroll-bar pt-4 pb-4"
               >
-                <Comment user={comment.refUserId} comment={comment}></Comment>
+                <Comment user={comment.userId} comment={comment}></Comment>
               </div>
             ))}
-            {isWriting ? (
+            {/* {isWriting ? (
               <div className="card w-100 border-0 shadow-none right-scroll-bar pt-4 pb-4">
                 <Load />
               </div>
