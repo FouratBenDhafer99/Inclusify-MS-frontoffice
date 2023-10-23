@@ -312,7 +312,7 @@ const Postview = ({
               className="bg-grey text-grey-500 font-xssss border-0 lh-32 p-2 font-xssss fw-600 rounded-3 w-100 theme-dark-bg"
             />
           </div>
-          <PostInteractions />
+          <PostInteractions postId={post.id} />
         </div>
       </div>
       {show ? (
