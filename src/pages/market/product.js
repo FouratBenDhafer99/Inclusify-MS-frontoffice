@@ -4,9 +4,9 @@ import React, {
     useEffect,
     useContext
 } from "react";
-import {
-    useParams
-} from "react-router-dom";
+import { UserContext } from "../../index";
+
+import { useNavigate, useParams } from "react-router-dom";
 
 import Header from '../../components/Header';
 import Leftnav from '../../components/Leftnav';
@@ -17,9 +17,13 @@ import Slider from "react-slick";
 import MarketApi from "../../api/marketApi";
 
 const Product = () => {
+    const { currentUser } = useContext(UserContext);
+    const navigate = useNavigate()
+
     const {
         productId
     } = useParams();
+
     const [product, setProduct] = useState({});
 
     async function getProd(id) {
@@ -29,14 +33,20 @@ const Product = () => {
         });
     }
 
+    const handleDeleteProduct = async (productId) => {
+        await MarketApi.deleteProductById(productId).then(res => navigate("/shop"))
+    }
+
+
+
     useEffect(() => {
         getProd(productId);
     }, []);
 
     return (
         <Fragment>
-            <Header/>
-            <Leftnav/>
+            <Header />
+            <Leftnav />
             <div className="main-content right-chat-active">
                 <div className="middle-sidebar-bottom">
                     <div className="middle-sidebar-left pe-0">
@@ -45,11 +55,11 @@ const Product = () => {
                             </div>
                             <div className="col-lg-5 mb-4 shop-slider">
                                 <Slider>
-                                        <div key={product.id} className="pt-lg--10 pb-lg--10 bg-white rounded-3">
-                                            <img src={`${product.image}`} alt="avater"
-                                                 className="rounded-3 img-fluid"/>
-                                        </div>
-                                    
+                                    <div key={product.id} className="pt-lg--10 pb-lg--10 bg-white rounded-3">
+                                        <img src={`${product.image}`} alt="avater"
+                                            className="rounded-3 img-fluid" />
+                                    </div>
+
                                 </Slider>
                             </div>
 
@@ -66,8 +76,14 @@ const Product = () => {
                                 <div className="clearfix"></div>
                                 <form action="#" className="form--action mt-4 mb-3">
                                     <div className="product-action flex-row align-items-center">
-                                        <a href="/defaulthoteldetails"
-                                           className="add-to-cart bg-dark text-white fw-700 ps-lg-5 pe-lg-5 text-uppercase font-xssss float-left border-dark border rounded-3 border-size-md d-inline-block mt-0 p-3 text-center ls-3">Buy</a>
+                                        {currentUser?._id === product.user_id ? <div>
+                                            <a href={`/editproduct/${product.id}`} className="add-to-cart bg-dark text-white fw-700 ps-lg-5 pe-lg-5 text-uppercase font-xssss float-left border-dark border rounded-3 border-size-md d-inline-block mt-0 p-3 text-center ls-3">Edit</a>
+                                            <a onClick={() => handleDeleteProduct(product.id)}
+                                                className="btn-round-xl alert-dark text-white d-inline-block mt-0 ms-4 float-left"><i
+                                                    className="ti-trash font-sm"></i></a></div>
+                                            : <a href={`/editproduct/${product.id}`}
+                                                className="add-to-cart bg-dark text-white fw-700 ps-lg-5 pe-lg-5 text-uppercase font-xssss float-left border-dark border rounded-3 border-size-md d-inline-block mt-0 p-3 text-center ls-3">Buy</a>
+                                        }
                                     </div>
                                 </form>
                                 <div className="clearfix"></div>
@@ -87,8 +103,8 @@ const Product = () => {
                     </div>
                 </div>
             </div>
-            <Popupchat/>
-            <Appfooter/>
+            <Popupchat />
+            <Appfooter />
         </Fragment>
     );
 }

@@ -49,21 +49,9 @@ const ShopOne = () => {
                                     </div>
 
                                     <div className="col-lg-12 mt-3">
-                                        <a href=""><h4 className="float-left font-xssss fw-700 text-grey-500 text-uppercase ls-3 mt-2 pt-1">+ Publish Your Own Product !</h4></a>
-                                        <select className="searchCat float-right sort">
-                                            <option value="">Default Sorting</option>
-                                            <option value="151781441596 ">Fashion</option>
-                                            <option value="139119624252 ">- Men</option>
-                                            <option value="139118313532 ">- Women</option>
-                                            <option value="139360141372 ">Electronics</option>
-                                            <option value="152401903676 ">Home &amp; Garden</option>
-                                            <option value="138866720828 ">- Decor</option>
-                                            <option value="138866917436 ">- Lighting</option>
-                                        </select>
+                                        <a href="/addProduct"><h4 className="float-left font-xssss fw-700 text-grey-500 text-uppercase ls-3 mt-2 pt-1">+ Publish Your Own Product !</h4></a>
                                     </div>
-
                                     {products.map((value, index) => (
-
                                         <div key={index} className="col-lg-4 col-md-6">
                                             <div className="card w-100 border-0 mt-4">
                                                 <div className = "card-image w-100 p-0 text-center bg-greylight rounded-3 mb-2" href= {`/product/${value.id}`}> 

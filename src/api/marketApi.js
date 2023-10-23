@@ -93,7 +93,7 @@ const MarketApi = {
         }
     },
 
- updateProductById : async (product) => {
+ updateProductById : async (product,id) => {
         try {
             const keycloackRes = await getKeycloakToken();
             if (keycloackRes) {
@@ -105,7 +105,28 @@ const MarketApi = {
                         Authorization: `Bearer ${authToken}`,
                     },
                 };
-                const response = await axios.put(`${BASE_URL}/` + product.id, product, config);
+                const response = await axios.put(`${BASE_URL}/` + id, product, config);
+                console.log(response);
+                return response.data;
+            }
+        } catch (error) {
+            console.log(error.response.data);
+        }
+    },
+
+ deleteProductById: async (productId) => {
+        try {
+            const keycloackRes = await getKeycloakToken();
+            if (keycloackRes) {
+                const authToken = keycloackRes.access_token;
+                //console.log(authToken);
+                const config = {
+                    headers: {
+                        // "Content-Type": "application/json",
+                        Authorization: `Bearer ${authToken}`,
+                    },
+                };
+                const response = await axios.delete(`${BASE_URL}/` + productId, config);
                 console.log(response);
                 return response.data;
             }
@@ -113,7 +134,6 @@ const MarketApi = {
             console.log(error.response.data);
         }
     }
-
 };
 
 

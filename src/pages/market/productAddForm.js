@@ -32,6 +32,7 @@ const ProductAddForm = () => {
 
     const params = useParams()
     const navigate = useNavigate()
+    const { currentUser } = useContext(UserContext);
 
     const handleProductNameChange = (event) => setProductName(event.target.value)
     const handleProductDescriptionChange = (event) => setProductDescription(event.target.value)
@@ -57,30 +58,19 @@ const ProductAddForm = () => {
                 category: {
                     id: productCategory
                 },
-                image: productImage,
-                user_id: "652e9c0148ab2146dc2c51f2"
+                image: "https://img.abercrombie.com/is/image/anf/KIC_122-3168-1427-170_prod1.jpg?policy=product-extra-large",
+                user_id: currentUser._id
             }
             if (product?.id)
-                await marketApi.updateProductById({
-                    id: product.id,
-                    name: productName,
-                    description: productDescription,
-                    price: productPrice,
-                    quantity: productQuantity,
-                    category: productCategory,
-                    image: productImage,
-                    user_id: "652e9c0148ab2146dc2c51f2"
-                }).then(res => navigate("/shop"));
+                await marketApi.updateProductById(p,product.id).then(res => navigate("/shop"));
             else
                 await marketApi.createProduct(p).then(res => navigate("/shop"));
             console.log('====================================');
-            console.log(productName);
-            console.log('====================================');
-            console.log(product.data);
+            console.log(product);
             console.log('====================================');
         }
     }
-
+console.log(currentUser)
     const fn = async () => {
         await marketApi.getAllCategories().then(res => {
             console.log(res)
