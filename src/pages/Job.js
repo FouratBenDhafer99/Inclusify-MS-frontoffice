@@ -38,7 +38,7 @@ const Job =()=> {
             console.log("query =",query);
             console.log("filtredList =",filteredJobs);
           });
-    }, [jobList])
+    }, [])
 
     
   const [query, setQuery] = useState("");

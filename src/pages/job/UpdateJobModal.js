@@ -7,7 +7,7 @@ import jobApi from '../../api/jobApi';
 import {UserContext} from "../../index";
 import { useContext } from 'react';
 
-function UpdateJobModal() {
+function UpdateJobModal({job}) {
 
     const [show, setShow] = useState(false);
 
@@ -19,12 +19,12 @@ function UpdateJobModal() {
 
     //data
 
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [type, setType] = useState("");
-    const [salaryRange, setSalaryRange] = useState("");
-    const [address, setAddress] = useState("");
-    const [company, setCompany] = useState("");
+    const [nwtitle, setNwTitle] = useState(job.title);
+    const [nwdescription, setNwDescription] = useState(job.description);
+    const [nwType, setNwType] = useState(job.type);
+    const [nwSalaryRange, setNwSalaryRange] = useState(job.salaryRange);
+    const [nwAddress, setNwAddress] = useState(job.address);
+    const [nwCompany, setNwCompany] = useState(job.company);
 
     const {currentUser} = useContext(UserContext);
 
@@ -36,8 +36,11 @@ function UpdateJobModal() {
     // }
     // setValidated(true);
     const user = currentUser._id.toString();
-    jobApi.AddJob({title,description,type,salaryRange,address,company,user});
-    console.log(title,description,type,salaryRange,address,company,user);
+    const id = job.id;
+    
+    console.log(nwAddress,nwCompany,nwSalaryRange,nwType,nwdescription,nwtitle,user,id);
+    jobApi.UpdateJob({nwtitle,nwdescription,nwType,nwSalaryRange,nwAddress,nwCompany,user,id});
+    console.log();
   };
 
   return (
@@ -58,7 +61,8 @@ function UpdateJobModal() {
             required
             type="text"
             placeholder="Job title"
-            onChange={(e) => {setTitle(e.target.value)}}
+            onChange={(e) => {setNwTitle(e.target.value)}}
+            defaultValue={job.title}
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
@@ -68,7 +72,8 @@ function UpdateJobModal() {
             required
             type="text"
             placeholder="Description"
-            onChange={(e) => {setDescription(e.target.value)}}
+            onChange={(e) => {setNwDescription(e.target.value)}}
+            Value={job.description}
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
@@ -78,7 +83,8 @@ function UpdateJobModal() {
             required
             type="text"
             placeholder="Type"
-            onChange={(e) => {setType(e.target.value)}}
+            onChange={(e) => {setNwType(e.target.value)}}
+            defaultValue={job.type}
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
@@ -88,7 +94,8 @@ function UpdateJobModal() {
             required
             type="text"
             placeholder="Salary Range"
-            onChange={(e) => {setSalaryRange(e.target.value)}}
+            onChange={(e) => {setNwSalaryRange(e.target.value)}}
+            defaultValue={job.salaryRange}
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
@@ -97,8 +104,9 @@ function UpdateJobModal() {
           <Form.Control
             required
             type="text"
-        placeholder="Address"
-        onChange={(e) => {setAddress(e.target.value)}}
+             placeholder="Address"
+            onChange={(e) => {setNwAddress(e.target.value)}}
+            defaultValue={job.address}
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
@@ -108,7 +116,8 @@ function UpdateJobModal() {
             required
             type="text"
             placeholder="Company"
-            onChange={(e) => {setCompany(e.target.value)}}
+            onChange={(e) => {setNwCompany(e.target.value)}}
+            defaultValue={job.company}
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
