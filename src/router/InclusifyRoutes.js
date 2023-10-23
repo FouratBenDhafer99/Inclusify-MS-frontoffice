@@ -7,12 +7,8 @@ import Register from "../pages/Register";
 import Notfound from "../pages/Notfound";
 import Demo from "../demo/Demo";
 import Forgot from "../pages/Forgot";
-<<<<<<< HEAD
 import Event from "../pages/Event/Event";
 import FormAdd from "../pages/adminEvent/FormAdd";
-=======
-import Event from "../pages/Event";
->>>>>>> 9a3da978645f9f13c1026c4f61faebe00c4c0735
 import Job from "../pages/Job";
 import Auth from "./Auth";
 
