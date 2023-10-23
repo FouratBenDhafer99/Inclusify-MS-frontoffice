@@ -37,8 +37,8 @@ const handleSubmit = (event) => {
         <div>Adresse : {job.address}</div>
         <div>Créé le : {job.created_at}</div>
       </div>
-
-      <h3 className="font-xss fw-900 text-gray-500 p-4">Postuler</h3>
+        <div className="font-xss p-2 w-50 bg-blue-gradiant"><h3 className="font-xss fw-900 text-white p-4">Postuler pour : {job.title}</h3></div>
+      
       <form style={{ width: '50%' }} onSubmit={handleSubmit}>
         {/* Champ pour télécharger le CV */}
         <div className="mb-3">
@@ -63,7 +63,7 @@ const handleSubmit = (event) => {
             required
           ></textarea>
         </div>
-        <button type="submit" className="btn btn-primary">Soumettre la candidature</button>
+        <button type="submit" className="btn btn-primary btn-sm bg-blue-gradiant font-xss text-white rounded-xl">Soumettre la candidature</button>
       </form>
     </div>
     </div>
