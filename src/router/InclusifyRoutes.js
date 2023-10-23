@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import ProtectedRoute from "./PrivateRoutes";
 import Settings from "../pages/Settings";
@@ -9,11 +9,18 @@ import Demo from "../demo/Demo";
 import Forgot from "../pages/Forgot";
 import Event from "../pages/Event/Event";
 import FormAdd from "../pages/adminEvent/FormAdd";
+import Job from "../pages/Job";
 import Auth from "./Auth";
 
 const Home = React.lazy(() => import("../pages/Home"));
+const Shop = React.lazy(() => import("../pages/market/shop"));
+const Product = React.lazy(() => import("../pages/market/product"));
+const ProductAddForm = React.lazy(() => import("../pages/market/productAddForm"));
 const SkillList = React.lazy(() => import("../pages/skill/SkillList"));
 const StartQuiz = React.lazy(() => import("../pages/skill/StartQuiz"));
+const JobDetails = React.lazy(() => import("../pages/job/ApplyForJob"));
+const Commun = React.lazy(() => import("../pages/job/Commun"));
+const Myoffers = React.lazy(() => import("../pages/job/MyOffers"));
 const PlayQuiz = React.lazy(() => import("../pages/skill/PlayQuiz"));
 const ResultQuiz = React.lazy(() => import("../pages/skill/ResultQuiz"));
 const AdminSkillList = React.lazy(() => import("../pages/adminSkill/AdminSkillList"));
@@ -26,7 +33,6 @@ const AdminQuestionAdd = React.lazy(() => import("../pages/adminSkill/AdminQuest
  *  All routes are declared here
  */
 const InclusifyRoutes = () => {
-
     return (
         <Routes>
             <Route path={`/`} element={<Demo/>}/>
@@ -44,11 +50,16 @@ const InclusifyRoutes = () => {
 
                 <Route path={`/defaultsettings`} element={<Settings/>}/>
                 <Route path={"/home"} element={<Home/>}/>
-
+                
                 <Route path={"/admin/event"} >
                     <Route index exact element={<Event/>}/>
                     <Route exact path={`/admin/event/add`} element={<FormAdd/>}/>
                 </Route>
+
+                <Route path = {"/shop"} element = {<Shop/>} />
+                <Route path = {"/product/:productId"} element = {<Product />}/>
+                <Route path = {"/addproduct"} element = {<ProductAddForm />}/>
+                <Route path = {"/editProduct/:productId"} element = {<ProductAddForm />}/>
 
                 <Route path={`/skills`}>
                     <Route index exact element={<SkillList/>}/>
@@ -65,10 +76,19 @@ const InclusifyRoutes = () => {
                     <Route exact path={`/admin/skills/questions/add`} element={<AdminQuestionAdd/>}/>
                 </Route>
 
+                <Route path={"/jobs"} element={<Commun />} >
+                    <Route path={`/jobs/list`} element={<Job />}/>
+                    <Route path={"/jobs/jobdetails"} element={<JobDetails />} />
+                    <Route path={"/jobs/myoffers"} element={<Myoffers />} />
+                </Route>
+
 
             </Route>
             <Route path={`*`} element={<Notfound/>}/>
         </Routes>
+
+        //</Routes>
+        
     );
 };
 

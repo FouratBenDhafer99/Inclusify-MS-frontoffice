@@ -1,6 +1,9 @@
 import axios from "axios";
 import { UserManager } from "oidc-client";
 
+export const imagesFolder =
+  "E:/2023_2024_5TWIN5/microservices/inclusify/inclusify/feed-service/src/main/resources/utils/images/";
+
 const settings = {
   authority: "http://localhost:9999/login/oauth2/code/keycloak",
   client_id: "ms-auth",
