@@ -50,7 +50,30 @@ const join =async (eventId, email)=>{
       console.log(error.response.data);
   }
 }
-const addEvent = async (event) => {
+
+const getById = async (id) => {
+  try {
+    console.log("ID** : "+ id);
+      const keycloackRes = await getKeycloakToken();
+      if (keycloackRes) {
+          const authToken = keycloackRes.access_token;
+          //console.log(authToken);
+          const config = {
+              headers: {
+                  // "Content-Type": "application/json",
+                  Authorization: `Bearer ${authToken}`,
+              },
+          };
+          const response = await axios.get(url+"/"+id, config);
+          console.log(response);
+          return response.data;
+      }
+  } catch (error) {
+      console.log(error.response.data);
+  }
+}
+
+  const addEvent = async (event) => {
   try {
     const keycloakRes = await getKeycloakToken(); // Assuming this function retrieves the token
     if (keycloakRes) {
@@ -89,9 +112,32 @@ const addEvent = async (event) => {
   }
 };
 
+const deleteEvent = async (eventId) => {
+  try {
+      const keycloackRes = await getKeycloakToken();
+      if (keycloackRes) {
+          const authToken = keycloackRes.access_token;
+          //console.log(authToken);
+          const config = {
+              headers: {
+                  // "Content-Type": "application/json",
+                  Authorization: `Bearer ${authToken}`,
+              },
+          };
+          const response = await axios.delete(url+"/"+eventId, config);
+          console.log(response);
+          return response.data;
+      }
+  } catch (error) {
+      console.log(error.response.data);
+  }
+}
+
     
 export default {
     getAllEvents,
     join,
-    addEvent
+    addEvent,
+    getById,
+    deleteEvent
 };

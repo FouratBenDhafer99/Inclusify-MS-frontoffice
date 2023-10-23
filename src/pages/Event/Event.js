@@ -6,6 +6,7 @@ import Appfooter from '../../components/Appfooter';
 import Popupchat from '../../components/Popupchat';
 import evenementApi from "../../api/evenementApi";
 import { UserContext } from "../../index";
+import { Link } from 'react-router-dom';
 
 function Event() {
   const { currentUser } = useContext(UserContext);
@@ -150,7 +151,9 @@ function Event() {
                           className="font-xsssss fw-700 ps-3 pe-3 lh-32 float-right mt-4 text-uppercase rounded-3 ls-2 bg-success d-inline-block text-white me-1"
                         >
                           JOIN
-                        </button>
+                        </button><br></br>
+                        <Link to={`/admin/event/${value.id}`}>See Event</Link>
+
                       </div>
                     </div>
                   </div>
