@@ -20,7 +20,7 @@ const AdminQuestionAdd = () => {
         await skillAPI.getSkills().then(res=>{
             console.log(res)
             setSkills(res)
-            setSkill(res[0])
+            setSkill(res[0].skill.id)
         })
     }
 

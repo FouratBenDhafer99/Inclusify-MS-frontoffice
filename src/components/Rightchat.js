@@ -177,7 +177,7 @@ class Rightchat extends Component {
                         <div className="modal-popup-header w-100 border-bottom">
                             <div className="card p-3 d-block border-0 d-block">
                                 <figure className="avatar mb-0 float-left me-2">
-                                    <img src="assets/images/user-12.png" alt="avater" className="w35 me-1" />
+                                    <img src="/assets/images/user.png" alt="avater" className="w35 me-1" />
                                 </figure>
                                 <h5 className="fw-700 text-primary font-xssss mt-1 mb-1">Hendrix Stamp</h5>
                                 <h4 className="text-grey-500 font-xsssss mt-0 mb-0"><span className="d-inline-block bg-success btn-round-xss m-0"></span> Available</h4>

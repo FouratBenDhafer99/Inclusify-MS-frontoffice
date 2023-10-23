@@ -43,6 +43,42 @@ const getAllJobs = async (user) => {
   }
 };
 
+const getJobsByUser = async (userId) => {
+    try {
+        const response = await getKeycloakToken();
+        if (response) {
+            console.log(response);
+            const authToken = response.access_token;
+            console.log(authToken);
+            const config = {
+                headers: {
+                    // "Content-Type": "application/json",
+                    Authorization: `Bearer ${authToken}`,
+                },
+            };
+
+            const response3 = await axios.get(baseUrl+"job/byUser/"+userId, config);
+            console.log(response3.data);
+
+            return response3.data;
+        }
+    } catch (error) {
+        if (error.response) {
+            // The request was made and the server responded with a status code that falls out of the range of 2xx.
+            console.log("Response Data:", error.response.data);
+            console.log("Status Code:", error.response.status);
+            console.log("Headers:", error.response.headers);
+        } else if (error.request) {
+            // The request was made but no response was received (e.g., the server is down or there is no internet connection).
+            console.log("No Response Received. Request Details:", error.request);
+        } else {
+            console.log(error);
+            // Something happened in setting up the request that triggered the error.
+            console.log("Request Setup Error:", error.message);
+        }
+        console.log("Error Config:", error.config);
+    }
+};
 const applyForJob= async(cvFile , motivation , jobId , user , applicationStatus)=>{
     try {
         const response = await getKeycloakToken();
@@ -217,5 +253,5 @@ const applyForJob= async(cvFile , motivation , jobId , user , applicationStatus)
     }
 
 export default {
-  getAllJobs,applyForJob,AddJob,getMyOffers,UpdateJob
+  getAllJobs,applyForJob,AddJob,getMyOffers,UpdateJob,getJobsByUser
 };

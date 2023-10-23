@@ -11,8 +11,20 @@ const PostApi = {
   },
 
   getAllPostsByUser: async (id) => {
-    const response = await axios.get(`${BASE_URL}/${id}/getByUser/`);
-    return response.data;
+    const response = await getKeycloakToken();
+    if (response) {
+      console.log(response);
+      const authToken = response.access_token;
+      console.log(authToken);
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${authToken}`,
+        },
+      };
+      const res = await axios.get(`${BASE_URL}/byUser/${id}`, config);
+      return res.data;
+    }
   },
 
   createPost: async (postData) => {
