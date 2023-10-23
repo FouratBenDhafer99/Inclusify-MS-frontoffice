@@ -7,8 +7,12 @@ import Register from "../pages/Register";
 import Notfound from "../pages/Notfound";
 import Demo from "../demo/Demo";
 import Forgot from "../pages/Forgot";
+<<<<<<< HEAD
 import Event from "../pages/Event/Event";
 import FormAdd from "../pages/adminEvent/FormAdd";
+=======
+import Event from "../pages/Event";
+>>>>>>> 9a3da978645f9f13c1026c4f61faebe00c4c0735
 import Job from "../pages/Job";
 import Auth from "./Auth";
 
@@ -50,17 +54,15 @@ const InclusifyRoutes = () => {
 
                 <Route path={`/defaultsettings`} element={<Settings/>}/>
                 <Route path={"/home"} element={<Home/>}/>
-                
                 <Route path={"/admin/event"} >
                     <Route index exact element={<Event/>}/>
                     <Route exact path={`/admin/event/add`} element={<FormAdd/>}/>
                 </Route>
-
+                <Route path={"/event"} element={<Event/>}/>
                 <Route path = {"/shop"} element = {<Shop/>} />
                 <Route path = {"/product/:productId"} element = {<Product />}/>
                 <Route path = {"/addproduct"} element = {<ProductAddForm />}/>
                 <Route path = {"/editProduct/:productId"} element = {<ProductAddForm />}/>
-
                 <Route path={`/skills`}>
                     <Route index exact element={<SkillList/>}/>
                     <Route exact path={"/skills/startQuiz/:skillId"} element={<StartQuiz/>}/>
