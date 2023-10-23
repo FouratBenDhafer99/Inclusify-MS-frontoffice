@@ -11,6 +11,9 @@ import Event from "../pages/Event";
 import Auth from "./Auth";
 
 const Home = React.lazy(() => import("../pages/Home"));
+const Shop = React.lazy(() => import("../pages/market/shop"));
+const Product = React.lazy(() => import("../pages/market/product"));
+const ProductAddForm = React.lazy(() => import("../pages/market/productAddForm"));
 const SkillList = React.lazy(() => import("../pages/skill/SkillList"));
 const StartQuiz = React.lazy(() => import("../pages/skill/StartQuiz"));
 const PlayQuiz = React.lazy(() => import("../pages/skill/PlayQuiz"));
@@ -25,7 +28,6 @@ const AdminQuestionAdd = React.lazy(() => import("../pages/adminSkill/AdminQuest
  *  All routes are declared here
  */
 const InclusifyRoutes = () => {
-
     return (
         <Routes>
             <Route path={`/`} element={<Demo/>}/>
@@ -44,6 +46,10 @@ const InclusifyRoutes = () => {
                 <Route path={`/defaultsettings`} element={<Settings/>}/>
                 <Route path={"/home"} element={<Home/>}/>
                 <Route path={"/event"} element={<Event/>}/>
+                <Route path = {"/shop"} element = {<Shop/>} />
+                <Route path = {"/product/:productId"} element = {<Product />}/>
+                <Route path = {"/addproduct"} element = {<ProductAddForm />}/>
+                <Route path = {"/editProduct/:productId"} element = {<ProductAddForm />}/>
                 <Route path={`/skills`}>
                     <Route index exact element={<SkillList/>}/>
                     <Route exact path={"/skills/startQuiz/:skillId"} element={<StartQuiz/>}/>
