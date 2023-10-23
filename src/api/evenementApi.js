@@ -29,6 +29,27 @@ const getAllEvents = async (user) => {
     }
 };
 
+const getEventsByUser = async (user) => {
+    try {
+        const response = await getKeycloakToken();
+        if (response) {
+            console.log(response);
+            const authToken = response.access_token;
+            console.log(authToken);
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            };
+
+            const response3 = await axios.get(url+"/userEvent/"+user, config);
+            console.log(response3.data);
+            return response3.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 const join =async (eventId)=>{
   try {
@@ -53,5 +74,6 @@ const join =async (eventId)=>{
     
 export default {
     getAllEvents,
-    join
+    join,
+    getEventsByUser
 };

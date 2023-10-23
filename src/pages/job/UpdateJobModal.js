@@ -73,7 +73,7 @@ function UpdateJobModal({job}) {
             type="text"
             placeholder="Description"
             onChange={(e) => {setNwDescription(e.target.value)}}
-            Value={job.description}
+            defaultValue={job.description}
           />
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>

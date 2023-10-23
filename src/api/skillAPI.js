@@ -44,6 +44,26 @@ const getSkillById = async (id) => {
         console.log(error.response.data);
     }
 }
+const getSkillByUserId = async (id) => {
+    try {
+        const keycloackRes = await getKeycloakToken();
+        if (keycloackRes) {
+            const authToken = keycloackRes.access_token;
+            //console.log(authToken);
+            const config = {
+                headers: {
+                    // "Content-Type": "application/json",
+                    Authorization: `Bearer ${authToken}`,
+                },
+            };
+            const response = await axios.get(url+"userSkills/"+id, config);
+            console.log(response);
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error.response.data);
+    }
+}
 
 const addSkill = async (skill) => {
     try {
@@ -107,4 +127,4 @@ const deleteSkill = async (skillId) => {
     }
 }
 
-export default {getSkills, getSkillById, addSkill, editSkill, deleteSkill}
+export default {getSkills, getSkillById, addSkill, editSkill, deleteSkill, getSkillByUserId}

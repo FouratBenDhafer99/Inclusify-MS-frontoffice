@@ -102,8 +102,26 @@ const createPostComment = async (postId, comment, userId) => {
   }
 };
 
+const getAllPostsByUser= async (id) => {
+  const response = await getKeycloakToken();
+  if (response) {
+    console.log(response);
+    const authToken = response.access_token;
+    console.log(authToken);
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${authToken}`,
+      },
+    };
+    const res = await axios.get(`${url}/byUser/${id}`, config);
+    return res.data;
+  }
+}
+
 export default {
   getAllPosts,
   createPost,
   createPostComment,
+  getAllPostsByUser
 };

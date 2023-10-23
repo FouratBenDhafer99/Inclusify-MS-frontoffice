@@ -26,6 +26,7 @@ const AdminSkillList = React.lazy(() => import("../pages/adminSkill/AdminSkillLi
 const AdminSkillAdd = React.lazy(() => import("../pages/adminSkill/AdminSkillAdd"));
 const AdminQuestionList = React.lazy(() => import("../pages/adminSkill/AdminQuestionList"));
 const AdminQuestionAdd = React.lazy(() => import("../pages/adminSkill/AdminQuestionAdd"));
+const UserPage = React.lazy(() => import("../pages/Userpage"));
 
 /**
  *
@@ -75,6 +76,7 @@ const InclusifyRoutes = () => {
                     <Route path={"/jobs/myoffers"} element={<Myoffers />} />
                 </Route>
 
+                <Route path={"profile/:userId"} element={<UserPage/>}/>
 
             </Route>
             <Route path={`*`} element={<Notfound/>}/>
