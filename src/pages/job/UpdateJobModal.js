@@ -41,12 +41,13 @@ function UpdateJobModal({job}) {
     console.log(nwAddress,nwCompany,nwSalaryRange,nwType,nwdescription,nwtitle,user,id);
     jobApi.UpdateJob({nwtitle,nwdescription,nwType,nwSalaryRange,nwAddress,nwCompany,user,id});
     console.log();
+    handleClose();
   };
 
   return (
     <>
     <Button className="btn btn-sm btn-primary rounded-xl font-xss text-white m-2" variant="primary" onClick={handleShow}>
-        Update   
+    <i className=" feather-edit"></i>    
     </Button>
 
     <Modal show={show} onHide={handleClose}>

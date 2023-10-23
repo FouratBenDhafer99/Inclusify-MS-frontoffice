@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import jobApi from "../api/jobApi";
 import AddJobModal from "./job/AddJobModal";
 import UpdateJobModal from "./job/UpdateJobModal";
+import DeleteModal from "./job/DeleteModal";
 import {UserContext} from "../index";
 import { useContext } from 'react';
 import { all } from "axios";
@@ -27,6 +28,7 @@ const Job =()=> {
         async function fetchJobs() {
             const allJob = await jobApi.getAllJobs();
             console.log(allJob);
+            console.log("current user",currentUser);
             setJobList(allJob);
             setQuery("");
             setFilteredJobs(allJob);
@@ -65,6 +67,16 @@ const Job =()=> {
         navigate("/jobs/jobdetails", { state: { job } });
         };
 
+    const handleDelete = (id) => {
+        console.log("job deleted", id);
+        jobApi.deleteJob(id);
+        }    
+    
+    const handleNav = (job) => {
+        console.log("job clicked", job);
+        navigate("/jobs/jobapplications", { state: { job } });
+        }
+
  
         return (
             <Fragment> 
@@ -88,7 +100,8 @@ const Job =()=> {
                                         <h5 className="font-xssss mb-2 text-grey-500 fw-600"><span className="text-grey-900 font-xssss text-dark">Location : </span> {value.address}</h5>
                                         <h5 className="font-xssss mb-2 text-grey-500 fw-600"><span className="text-grey-900 font-xssss text-dark">Company : </span>{value.company}</h5>
                                         <h5 className="font-xssss text-grey-500 fw-600 mb-3"><span className="text-grey-900 font-xssss text-dark">Salary : </span> {value.salaryRange}</h5>
-                                       {currentUser?._id===value.user? <UpdateJobModal job={value}/>:<button style={{border:0}} onClick={()=>handleClick(filteredJobs[index])} className="position-absolute bottom-15 mb-3 right-15 rounded-xl font-xss text-white"><i className="btn-round-sm bg-primary-gradiant text-white font-sm feather-chevron-right"></i></button>}
+                                        <div><button className="btn btn-sm btn-primary m-1 font-xss text-white rounded-xl" onClick={()=>handleNav(value)}>Job Applications</button></div>
+                                       {currentUser?._id===value.user?<div> <UpdateJobModal job={value}/><DeleteModal job={value}/> </div>:<button style={{border:0}} onClick={()=>handleClick(filteredJobs[index])} className="position-absolute bottom-15 mb-3 right-15 rounded-xl font-xss text-white"><i className="btn-round-sm bg-primary-gradiant text-white font-sm feather-chevron-right"></i></button>}
                                     </div>
 
                                     ))}
