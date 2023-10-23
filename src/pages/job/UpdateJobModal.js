@@ -41,6 +41,7 @@ function UpdateJobModal({job}) {
     console.log(nwAddress,nwCompany,nwSalaryRange,nwType,nwdescription,nwtitle,user,id);
     jobApi.UpdateJob({nwtitle,nwdescription,nwType,nwSalaryRange,nwAddress,nwCompany,user,id});
     console.log();
+    handleClose();
   };
 
   return (
