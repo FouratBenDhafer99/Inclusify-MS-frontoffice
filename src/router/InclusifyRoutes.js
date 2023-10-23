@@ -7,7 +7,8 @@ import Register from "../pages/Register";
 import Notfound from "../pages/Notfound";
 import Demo from "../demo/Demo";
 import Forgot from "../pages/Forgot";
-import Event from "../pages/Event";
+import Event from "../pages/Event/Event";
+import FormAdd from "../pages/adminEvent/FormAdd";
 import Auth from "./Auth";
 
 const Home = React.lazy(() => import("../pages/Home"));
@@ -43,7 +44,12 @@ const InclusifyRoutes = () => {
 
                 <Route path={`/defaultsettings`} element={<Settings/>}/>
                 <Route path={"/home"} element={<Home/>}/>
-                <Route path={"/event"} element={<Event/>}/>
+
+                <Route path={"/admin/event"} >
+                    <Route index exact element={<Event/>}/>
+                    <Route exact path={`/admin/event/add`} element={<FormAdd/>}/>
+                </Route>
+
                 <Route path={`/skills`}>
                     <Route index exact element={<SkillList/>}/>
                     <Route exact path={"/skills/startQuiz/:skillId"} element={<StartQuiz/>}/>
