@@ -3,11 +3,12 @@ import PostInteractions from "./PostInteractions";
 import CreatePostModal from "./CreatePostModal";
 
 import ReactOnPost from "./ReactOnPost";
-// import {UserContext} from '../../index';
+import { UserContext } from "../../index";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 import PostApi from "../../api/PostApi";
 import feedApi from "../../api/feedApi";
+import { imagesFolder } from "../../api/auth_helper";
 //import ViewPostModal from "./ViewPostModal";
 const ViewPostModal = React.lazy(() => import("./ViewPostModal"));
 
@@ -19,6 +20,7 @@ const Postview = ({
   postvideo,
   id,
   post,
+  comments,
   openComments,
   closeModal,
 }) => {
@@ -26,7 +28,8 @@ const Postview = ({
   user = post?.user || user;
   time = post?.createdAt;
   postimage = post?.images[0] || postimage;
-  // const {currentUser, setCurrentUser} = useContext(UserContext);
+  comments = post?.comments || comments;
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const [commentsNumber, setCommentsNumber] = useState(0);
   const [likesNumber, setLikesNumber] = useState(0);
@@ -112,7 +115,11 @@ const Postview = ({
   const TabOne = [];
   let counter = 1;
   post?.images.map((key, value) => {
+    console.log(key);
+    console.log(value);
     // console.log('key: '+key+" , value: "+value);
+    // let kk = "http://localhost:9999/feed-service/images/" + key;
+    // console.log(kk);
     TabOne.push({ image: `0${counter}`, bigImage: key });
     counter++;
   });
@@ -203,8 +210,12 @@ const Postview = ({
         ""
       )}
       <div className="card-body d-flex p-0">
-        {/* <ReactOnPost likesNumber={post?.reacts?.length} postId={post?._id} userId={currentUser?._id}
-                             reacts={post?.reacts}/> */}
+        <ReactOnPost
+          likesNumber={post?.reacts?.length}
+          postId={post?._id}
+          userId={currentUser?._id}
+          reacts={post?.reacts}
+        />
         <a
           className="d-flex align-items-center fw-600 text-grey-900 text-dark lh-26 font-xssss com-a"
           onClick={show}

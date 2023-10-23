@@ -1,12 +1,17 @@
-import React, { Component, Fragment } from "react";
+import React, {Fragment, useEffect, useState, Component} from "react";
 import Header from '../components/Header';
 import Leftnav from '../components/Leftnav';
 import Rightchat from '../components/Rightchat';
 import Appfooter from '../components/Appfooter';
 import Popupchat from '../components/Popupchat';
 import axios from 'axios';
+import evenementApi from "../api/evenementApi";
+
+
+
 
 class Event extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -17,6 +22,7 @@ class Event extends Component {
             searchQuery: "",
         };
     }
+
 
     togglePopup = (message = "") => {
         this.setState((prevState) => ({
@@ -35,12 +41,13 @@ class Event extends Component {
 
     async componentDidMount() {
         try {
-            const response = await axios.get('http://localhost:8091/event');
-            this.setState({ events: response.data });
+          const events = await evenementApi.getAllEvents();
+          this.setState({ events });
         } catch (error) {
-            console.error('Error fetching events: ', error);
+          console.error('Error fetching events: ', error);
         }
-    }
+      }
+
 
     showAutoDismissPopup = (message) => {
         this.setState({ showPopup: true, popupMessage: message });
@@ -58,26 +65,26 @@ class Event extends Component {
     
     handleJoinClick = async (eventId, event) => {
         if (event.attendeeEmails && event.attendeeEmails.includes(this.state.userEmail)) {
-            alert("You have already attended this event.");
-            return;
+          alert("You have already attended this event.");
+          return;
         }
-    
+      
         const joinedEvents = new Set(this.state.joinedEvents);
         joinedEvents.add(eventId);
-    
+      
         this.setState({ joinedEvents });
-    
+        console.log("event Id" + eventId);
+
         try {
-            const response = await axios.post(`http://localhost:8091/event/${eventId}/join?userEmail=${this.state.userEmail}`);
-            console.log("Joined event successfully" + response);
-            // Show the popup after joining with a success message
+            const response = await evenementApi.join(eventId); 
+            console.log("Joined event successfully", response );
             this.togglePopup("You have successfully joined the event.");
         } catch (error) {
-            console.error('Error joining event: ', error);
-            // Show the popup with an error message
-            this.togglePopup("An error occurred while joining the event.");
+          console.error('Error joining event: ', error);
+          this.togglePopup("An error occurred while joining the event.");
         }
-    }
+      };
+      
     
     handleCategoryChange = (categoryId) => {
         const updatedCategories = this.state.categories.map((category) => {
@@ -139,7 +146,6 @@ class Event extends Component {
                     </div>
                 </div>
 
-
                 <div className="main-content right-chat-active">
                     <div className="middle-sidebar-bottom">
                         <div className="middle-sidebar-left pe-0">
@@ -163,7 +169,7 @@ class Event extends Component {
                                     </h2>
                                 </div>    
 
-                                {events.filter((event) => event.name.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
+                                {this.state.events?.filter((event) => event.name.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
                                     .map((value, index) => (
                                     <div key={index} className="col-lg-4 col-md-6 pe-2 ps-2">
                                         <div className="card p-3 bg-white w-100 hover-card border-0 shadow-xss rounded-xxl border-0 mb-3 overflow-hidden ">

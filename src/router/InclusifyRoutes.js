@@ -9,6 +9,7 @@ import Demo from "../demo/Demo";
 import Forgot from "../pages/Forgot";
 import Event from "../pages/Event";
 import Job from "../pages/Job";
+import Auth from "./Auth";
 
 const Home = React.lazy(() => import("../pages/Home"));
 const SkillList = React.lazy(() => import("../pages/skill/SkillList"));
@@ -16,6 +17,12 @@ const StartQuiz = React.lazy(() => import("../pages/skill/StartQuiz"));
 const JobDetails = React.lazy(() => import("../pages/job/ApplyForJob"));
 const Commun = React.lazy(() => import("../pages/job/Commun"));
 const Myoffers = React.lazy(() => import("../pages/job/MyOffers"));
+const PlayQuiz = React.lazy(() => import("../pages/skill/PlayQuiz"));
+const ResultQuiz = React.lazy(() => import("../pages/skill/ResultQuiz"));
+const AdminSkillList = React.lazy(() => import("../pages/adminSkill/AdminSkillList"));
+const AdminSkillAdd = React.lazy(() => import("../pages/adminSkill/AdminSkillAdd"));
+const AdminQuestionList = React.lazy(() => import("../pages/adminSkill/AdminQuestionList"));
+const AdminQuestionAdd = React.lazy(() => import("../pages/adminSkill/AdminQuestionAdd"));
 
 /**
  *
@@ -33,24 +40,45 @@ const InclusifyRoutes = () => {
       <Route element={<ProtectedRoute isAuth={true} redirectPath={"/login"} />}>
         {/* Add your private routes here */}
 
-        <Route path={`/defaultsettings`} element={<Settings />} />
-        <Route path={"/home"} element={<Home />} />
-        <Route path={"/event"} element={<Event />} />
-        <Route path={"/skills"} element={<SkillList />} />
-        <Route path={"/skills/startQuiz/:skillId"} element={<StartQuiz />} />
+            {/* Routes you have to be logged in to reach else you will be redirected to Login */}
+            <Route
+                element={
+                    <ProtectedRoute isAuth={Auth.getToken()} redirectPath={"/login"}/>
+                }
+            >
+                {/* Add your private routes here */}
 
-        <Route path={"/jobs"} element={<Commun />} >
-            <Route path={`/jobs/list`} element={<Job />}/>
-            <Route path={"/jobs/jobdetails"} element={<JobDetails />} />
-            <Route path={"/jobs/myoffers"} element={<Myoffers />} />
+                <Route path={`/defaultsettings`} element={<Settings/>}/>
+                <Route path={"/home"} element={<Home/>}/>
+                <Route path={"/event"} element={<Event/>}/>
+                <Route path={`/skills`}>
+                    <Route index exact element={<SkillList/>}/>
+                    <Route exact path={"/skills/startQuiz/:skillId"} element={<StartQuiz/>}/>
+                    <Route exact path={"/skills/playQuiz/:skillId"} element={<PlayQuiz/>}/>
+                    <Route exact path={"/skills/resultQuiz/:quizId"} element={<ResultQuiz/>}/>
+                </Route>
+
+                <Route path={`/admin/skills`}>
+                    <Route index exact element={<AdminSkillList/>}/>
+                    <Route exact path={`/admin/skills/add`} element={<AdminSkillAdd/>}/>
+                    <Route exact path={`/admin/skills/edit/:skillId`} element={<AdminSkillAdd/>}/>
+                    <Route exact path={`/admin/skills/questions/`} element={<AdminQuestionList/>}/>
+                    <Route exact path={`/admin/skills/questions/add`} element={<AdminQuestionAdd/>}/>
+                </Route>
+
+                <Route path={"/jobs"} element={<Commun />} >
+                    <Route path={`/jobs/list`} element={<Job />}/>
+                    <Route path={"/jobs/jobdetails"} element={<JobDetails />} />
+                    <Route path={"/jobs/myoffers"} element={<Myoffers />} />
+                </Route>
+
+
+            </Route>
+            <Route path={`*`} element={<Notfound/>}/>
         </Route>
-        
-
-        {/* Routes you have to be a LAWMAKER in to reach else you will be redirected to notfound */}
-      </Route>
-      <Route path={`*`} element={<Notfound />} />
     </Routes>
-  );
+        
+    );
 };
 
 export default InclusifyRoutes;

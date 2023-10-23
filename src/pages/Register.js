@@ -44,7 +44,7 @@ const Register = () => {
       const user = await userApi.createUser(formData);
       console.log(user);
       setTimeout(() => {
-        window.location.href = "http://localhost:9999/login";
+        window.location.href = "http://localhost:5000/login";
       }, 4000);
     } catch (error) {
       console.log(error);
