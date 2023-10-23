@@ -92,8 +92,13 @@ const ProfilecardThree = ({user, isCurrentUser, handleTabKeyChange, activeTab}) 
                     </li>
                     <li className="list-inline-item me-5">
                         <a onClick={() => handleParentTabKeyChange("events")} href="#!"
-                           className={`fw-700 font-xssss text-grey-500 pt-3 pb-3 ls-1 d-inline-block ${activeTab === "jobs" ? "active" : ""}`}
+                           className={`fw-700 font-xssss text-grey-500 pt-3 pb-3 ls-1 d-inline-block ${activeTab === "events" ? "active" : ""}`}
                            data-toggle="tab">Events</a>
+                    </li>
+                    <li className="list-inline-item me-5">
+                        <a onClick={() => handleParentTabKeyChange("products")} href="#!"
+                           className={`fw-700 font-xssss text-grey-500 pt-3 pb-3 ls-1 d-inline-block ${activeTab === "products" ? "active" : ""}`}
+                           data-toggle="tab">Products</a>
                     </li>
                 </ul>
             </div>

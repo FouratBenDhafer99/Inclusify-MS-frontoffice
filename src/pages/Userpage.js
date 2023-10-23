@@ -18,6 +18,7 @@ import skillAPI from "../api/skillAPI";
 import jobApi from "../api/jobApi";
 import UpdateJobModal from "./job/UpdateJobModal";
 import evenementApi from "../api/evenementApi";
+import marketApi from "../api/marketApi";
 
 const Userpage = () => {
 
@@ -31,6 +32,7 @@ const Userpage = () => {
     const [isSkillsLoading, setIsSkillsLoading] = useState(true)
     const [isJobsLoading, setIsJobsLoading] = useState(true)
     const [isEventsLoading, setIsEventsLoading] = useState(true)
+    const [isProductsLoading, setIsProductsLoading] = useState(true)
 
 
     const handleTabKeyChange = (newTab) => setTabKey(newTab)
@@ -91,6 +93,19 @@ const Userpage = () => {
                 console.log(res)
             }).catch(e => console.info(e));
     }
+
+    const [products, setProducts] = useState([]);
+
+    const getProducts = async () => {
+        setIsProductsLoading(true)
+        console.log(user)
+        if (user)
+            await marketApi.getProductsByUser(user._id).then(res => {
+                setProducts(res);
+                setIsProductsLoading(false)
+                console.log(res)
+            }).catch(e => console.info(e));
+    }
     const [events, setEvents] = useState([]);
 
     const getEvents = async () => {
@@ -129,10 +144,11 @@ const Userpage = () => {
     useEffect(() => {
         //setIsLoading(true)
         console.log(user)
-        getPosts()
-        getSkills()
-        getJobs()
-        getEvents()
+        //getPosts()
+        //getSkills()
+        //getJobs()
+       // getEvents()
+        getProducts()
     }, [user])
 
     const navigate = useNavigate();
@@ -194,6 +210,7 @@ const Userpage = () => {
                                                 }
                                             </Tab.Pane>
                                             <Tab.Pane eventKey="jobs" title={"Jobs"}>
+
                                                 {isJobsLoading ? <Load/> :
                                                     jobs.length > 0 ?
                                                         jobs.map((value, index) => (
@@ -268,6 +285,26 @@ const Userpage = () => {
                                                                 </div>
                                                             </div>
                                                         )) : "No posted events yet"
+                                                }
+                                            </Tab.Pane>
+                                            <Tab.Pane eventKey="products" title={"Products"}>
+                                                {isProductsLoading ? <Load/> :
+                                                    products.length > 0 ?
+                                                        products.map((value, index) => (
+                                                                <div key={index} className="col-lg-4 col-md-6">
+                                                                    <div className="card w-100 border-0 mt-4">
+                                                                        <div className = "card-image w-100 p-0 text-center bg-greylight rounded-3 mb-2" href= {`/product/${value.id}`}>
+                                                                            <a href= {`/product/${value.id}`} > < img width = "350" style = {{objectFit: 'cover'}} height = "350" src={`${value.image}`} alt="product" className="w-100 mt-0 mb-0 p-5"/></a>
+                                                                        </div>
+                                                                        <div className="card-body w-100 p-0 text-center">
+                                                                            <h2 className="mt-2 mb-1"><a href="/singleproduct" className="text-black fw-700 font-xsss lh-26">{value.name}</a>
+                                                                            </h2>
+                                                                            <h6 className="font-xsss fw-600 text-grey-500 ls-2">${value.price}</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            )) : "No products yet"
                                                 }
                                             </Tab.Pane>
 
