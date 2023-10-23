@@ -12,6 +12,9 @@ import Job from "../pages/Job";
 import Auth from "./Auth";
 
 const Home = React.lazy(() => import("../pages/Home"));
+const Shop = React.lazy(() => import("../pages/market/shop"));
+const Product = React.lazy(() => import("../pages/market/product"));
+const ProductAddForm = React.lazy(() => import("../pages/market/productAddForm"));
 const SkillList = React.lazy(() => import("../pages/skill/SkillList"));
 const StartQuiz = React.lazy(() => import("../pages/skill/StartQuiz"));
 const JobDetails = React.lazy(() => import("../pages/job/ApplyForJob"));
@@ -29,16 +32,12 @@ const AdminQuestionAdd = React.lazy(() => import("../pages/adminSkill/AdminQuest
  *  All routes are declared here
  */
 const InclusifyRoutes = () => {
-  return (
-    <Routes>
-      <Route path={`/`} element={<Demo />} />
-      <Route path={`/login`} element={<Login />} />
-      <Route path={`/register`} element={<Register />} />
-      <Route path={`/verifyToken/:token`} element={<Forgot />} />
-
-      {/* Routes you have to be logged in to reach else you will be redirected to Login */}
-      <Route element={<ProtectedRoute isAuth={true} redirectPath={"/login"} />}>
-        {/* Add your private routes here */}
+    return (
+        <Routes>
+            <Route path={`/`} element={<Demo/>}/>
+            <Route path={`/login`} element={<Login/>}/>
+            <Route path={`/register`} element={<Register/>}/>
+            <Route path={`/verifyToken/:token`} element={<Forgot/>}/>
 
             {/* Routes you have to be logged in to reach else you will be redirected to Login */}
             <Route
@@ -51,6 +50,10 @@ const InclusifyRoutes = () => {
                 <Route path={`/defaultsettings`} element={<Settings/>}/>
                 <Route path={"/home"} element={<Home/>}/>
                 <Route path={"/event"} element={<Event/>}/>
+                <Route path = {"/shop"} element = {<Shop/>} />
+                <Route path = {"/product/:productId"} element = {<Product />}/>
+                <Route path = {"/addproduct"} element = {<ProductAddForm />}/>
+                <Route path = {"/editProduct/:productId"} element = {<ProductAddForm />}/>
                 <Route path={`/skills`}>
                     <Route index exact element={<SkillList/>}/>
                     <Route exact path={"/skills/startQuiz/:skillId"} element={<StartQuiz/>}/>
@@ -75,8 +78,9 @@ const InclusifyRoutes = () => {
 
             </Route>
             <Route path={`*`} element={<Notfound/>}/>
-        </Route>
-    </Routes>
+        </Routes>
+
+        //</Routes>
         
     );
 };
