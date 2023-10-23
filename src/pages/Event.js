@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, {Fragment, useEffect, useState, Component} from "react";
 import Header from '../components/Header';
 import Leftnav from '../components/Leftnav';
 import Rightchat from '../components/Rightchat';
@@ -9,7 +9,9 @@ import evenementApi from "../api/evenementApi";
 
 
 
+
 class Event extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -20,6 +22,7 @@ class Event extends Component {
             searchQuery: "",
         };
     }
+
 
     togglePopup = (message = "") => {
         this.setState((prevState) => ({
@@ -73,7 +76,7 @@ class Event extends Component {
         console.log("event Id" + eventId);
 
         try {
-            const response = await evenementApi.join(); 
+            const response = await evenementApi.join(eventId); 
             console.log("Joined event successfully", response );
             this.togglePopup("You have successfully joined the event.");
         } catch (error) {
@@ -142,7 +145,6 @@ class Event extends Component {
                         </div>
                     </div>
                 </div>
-
 
                 <div className="main-content right-chat-active">
                     <div className="middle-sidebar-bottom">
