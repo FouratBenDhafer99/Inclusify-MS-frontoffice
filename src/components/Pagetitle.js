@@ -6,11 +6,11 @@ const Pagetitle = (props) => {
   const setQuery = props.setQuery;
 
 
-  const handleSearch = (e) => {
-    const searchTerm = e.target.value;
-        setQuery(searchTerm);
-        search(searchTerm);
-  }
+  // const handleSearch = (e) => {
+  //   const searchTerm = e.target.value;
+  //       setQuery(searchTerm);
+  //       //search(searchTerm);
+  // }
   
   
 
@@ -25,7 +25,7 @@ const Pagetitle = (props) => {
           <div className="search-form-2 ms-2">
             <i className="ti-search font-xss"></i>
             <input type="text" className="form-control text-grey-500 mb-0 bg-greylight theme-dark-bg border-0" placeholder="Search here."   onChange={(e) => {
-              handleSearch(e);
+              setQuery(e.target.value);
               
             }} />
           </div>
