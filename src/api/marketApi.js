@@ -23,6 +23,21 @@ const MarketApi = {
             return response1.data;
         }
     },
+    getProductsByUser: async (userId) => {
+        const response = await getKeycloakToken();
+        if (response) {
+            console.log(response);
+            const authToken = response.access_token;
+            console.log(authToken);
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            };
+            const response1 = await axios.get(`${BASE_URL}/getByUser/${userId}`, config);
+            return response1.data;
+        }
+    },
 
     getAllCategories: async () => {
         const response = await getKeycloakToken();

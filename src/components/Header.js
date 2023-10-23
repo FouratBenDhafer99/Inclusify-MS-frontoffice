@@ -110,11 +110,11 @@ const Header = () => {
                                 <li><Link to="/skills" className="nav-content-bttn open-font"><i
                                     className="feather-award btn-round-md bg-red-gradiant me-3"></i><span>Skills</span></Link>
                                 </li>
-                                <li><Link to="/defaultstorie" className="nav-content-bttn open-font"><i
-                                    className="feather-globe btn-round-md bg-gold-gradiant me-3"></i><span>Explore Stories</span></Link>
+                                <li><Link to="/jobs/list" className="nav-content-bttn open-font"><i
+                                    className="feather-briefcase btn-round-md bg-gold-gradiant me-3"></i><span>Jobs</span></Link>
                                 </li>
-                                <li><Link to="/defaultgroup" className="nav-content-bttn open-font"><i
-                                    className="feather-zap btn-round-md bg-mini-gradiant me-3"></i><span>Popular Groups</span></Link>
+                                <li><Link to="/shop" className="nav-content-bttn open-font"><i
+                                    className="feather-shopping-cart btn-round-md bg-mini-gradiant me-3"></i><span>Shop</span></Link>
                                 </li>
                                 <li><Link to={"/profile/"+currentUser?._id} className="nav-content-bttn open-font"><i
                                     className="feather-user btn-round-md bg-primary-gradiant me-3"></i><span>My Profile </span></Link>
@@ -125,17 +125,11 @@ const Header = () => {
                         <div className="nav-wrap bg-white bg-transparent-card rounded-xxl shadow-xss pt-3 pb-1 mb-2">
                             <div className="nav-caption fw-600 font-xssss text-grey-500"><span>Admin </span>Pages</div>
                             <ul className="mb-3">
-                                <li><Link to="/defaultemailbox" className="nav-content-bttn open-font"><i
-                                    className="font-xl text-current feather-inbox me-3"></i><span>Email Box</span><span
-                                    className="circle-count bg-warning mt-1">584</span></Link></li>
                                 <li><Link to="/admin/skills" className="nav-content-bttn open-font"><i
                                     className="font-xl text-current feather-award me-3"></i><span>Skills</span></Link>
                                 </li>
                                 <li><Link to="/admin/skills/questions" className="nav-content-bttn open-font"><i
                                     className="font-xl text-current feather-help-circle me-3"></i><span>Questions</span></Link>
-                                </li>
-                                <li><Link to="/defaultlive" className="nav-content-bttn open-font"><i
-                                    className="font-xl text-current feather-youtube me-3"></i><span>Live Stream</span></Link>
                                 </li>
                             </ul>
                         </div>
