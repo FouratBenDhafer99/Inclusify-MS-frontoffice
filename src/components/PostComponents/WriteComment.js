@@ -1,21 +1,32 @@
 import React, { useState, useContext } from "react";
 import PostApi from "../../api/PostApi";
-//import {UserContext} from "../../index";
+import { UserContext } from "../../index";
 import { Button } from "react-bootstrap";
 import email from "../../pages/Email";
 import Load from "../Load";
+import feedApi from "../../api/feedApi";
 
-const WriteComment = ({ user, postId, socket }) => {
-  // const {currentUser, setCurrentUser} = useContext(UserContext);
+const WriteComment = ({ user, postId }) => {
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   const [commentContent, setCommentContent] = useState("");
   const handleInputChange = async (event) => {
     let comment = event.target.value;
     setCommentContent(comment);
+    console.log(commentContent);
   };
   const handleOnSubmit = async (event) => {
     //console.log(currentUser);
     console.log(postId);
     console.log(commentContent);
+
+    // console.log(commentContent);
+
+    const resp = await feedApi.createPostComment(
+      postId,
+      commentContent,
+      currentUser._id
+    );
+    console.log(resp);
     setCommentContent("");
     console.log(commentContent);
     let comment = {
