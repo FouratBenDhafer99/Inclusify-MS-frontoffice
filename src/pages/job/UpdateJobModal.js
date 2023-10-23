@@ -46,7 +46,7 @@ function UpdateJobModal({job}) {
   return (
     <>
     <Button className="btn btn-sm btn-primary rounded-xl font-xss text-white m-2" variant="primary" onClick={handleShow}>
-        Update   
+    <i className=" feather-edit"></i>    
     </Button>
 
     <Modal show={show} onHide={handleClose}>
